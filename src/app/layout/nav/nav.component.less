@@ -1,0 +1,53 @@
+.my-nav{
+  position: absolute;
+  left: 0;
+  top:0;
+  width: 180px;
+  height: 100%;
+
+  nav{
+    background-color: #32475c;
+    position: fixed;
+    height: 100%;
+    width: 180px;
+    .menu{
+      .menu-item{
+        width: 100%;
+        font-size: 14px;
+        color: #cad6e2;
+        .menu-title{
+          height: 40px;
+          line-height: 40px;
+          padding: 0 10px;
+          .title-icon{
+            margin-right: 10px;
+          }
+          .menu-icon{
+            float: right;
+            line-height: 40px;
+          }
+        }
+        .menu-title:hover{
+          background-color: darkcyan;
+        }
+        .sub-menu{
+          .sub-menu-item{
+            width: 100%;
+            font-size: 13px;
+            padding: 0 40px;
+            background-color: #2c3e50;
+            a{
+              display: block;
+              color: #E0FEFF;
+              text-decoration: none;
+            }
+            .active{
+              color: darkcyan;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

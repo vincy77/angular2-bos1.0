@@ -1,0 +1,169 @@
+<div class="trade-list">
+  <ul class="nav nav-pills">
+    <li role="presentation" *ngFor="let item of nav.options"
+        [class.active]="item.key === nav.current.key"
+        (click)="navChange(item)">
+      <a href="javascript:">{{item.value}}</a>
+    </li>
+  </ul>
+  <section>
+    <button (click)="save()">save</button>
+    <div>
+      <label>Hero name:</label> <input #heroName />
+      <button (click)="add(heroName.value); heroName.value=''">
+        Add
+      </button>
+      <p *ngFor="let item of heros">{{item.name}}</p>
+    </div>
+  </section>
+  <section class="content">
+    <div class="table-list">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <!--<th>订单编号</th>-->
+            <th colspan="2">商品详情</th>
+            <th>订单详情</th>
+            <th>买家</th>
+            <th>收货人</th>
+            <th>总计</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tbody *ngFor="let order of orderList">
+          <tr>
+            <td colspan="9" class="order-detail">
+              <span>订单编号：<em>{{order.orderNo}}</em></span>
+              <span>下单时间：<em>{{order.orderTime}}</em></span>
+              <span>店铺：<em>{{order.shopName}}</em></span>
+            </td>
+          </tr>
+          <tr>
+            <!--<td width="10%"></td>-->
+            <td colspan="2" width="30%">
+              <div *ngFor="let product of order.orderItems" class="product-detail">
+                <img src="" style="height: 50px;width: 50px">
+                <span>{{product.orderItem.productName}}</span>
+              </div>
+            </td>
+            <!--<td width="20%" style="border-left:none;">-->
+              <!--<div *ngFor="let product of order.orderItems">-->
+                <!--<span>{{product.orderItem.productName}}</span>-->
+              <!--</div>-->
+            <!--</td>-->
+            <td width="10%">
+              <a class="ope">订单详情</a>
+            </td>
+            <td width="10%">
+              <span>{{order.buyerName}}</span>
+              <br />
+              <span>{{order.consigneePhone}}</span>
+            </td>
+            <td width="10%">
+              <span>{{order.consignee}}</span>
+              <br>
+              <span class="ope" (click)="viewAddress(viewAddrTemplate, order)">查看地址</span>
+            </td>
+            <td width="10%">总计</td>
+            <td width="10%">
+              <button class="btn btn-success" (click)="deliver(deliverTemplate, order)">发货</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-12 pagination">
+      <pagination [totalItems]="bigTotalItems" [(ngModel)]="bigCurrentPage"
+                  [maxSize]="maxSize" class="pagination-sm"
+                  [boundaryLinks]="true"></pagination>
+    </div>
+  </section>
+</div>
+
+
+<button class="btn btn-primary" (click)="lgModal.show()">Large modal</button>
+
+<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Large modal</h4>
+        <button type="button" class="close pull-right" (click)="lgModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<template #viewAddrTemplate>
+  <div class="view-address-modal">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">收货地址</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="viewAddrModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <label>收件人：</label>
+      <span>{{viewAddressData.consignee}}</span>
+      <label>联系电话：</label>
+      <span>{{viewAddressData.consigneePhone}}</span>
+      <label>收件地址：</label>
+      <span>{{title}}</span>
+    </div>
+  </div>
+</template>
+<template #deliverTemplate>
+  <div class="deliver-modal">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">发货</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="deliverModalref.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="onSubmit()" #deliverForm="ngForm">
+        <label for="expressCompany">快递公司：</label>
+        <select class="form-control" id="expressCompany" required
+                [(ngModel)]="deliverData.expressCompany" name="expressCompany">
+          <option class="option" *ngFor="let company of expressCompanys" [value]="company.key">
+            {{company.name}}
+          </option>
+        </select>
+        <label for="expressNo">快递单号：</label>
+        <input class="form-control" id="expressNo" type="number"
+                required [(ngModel)]="deliverData.expressNo"
+                name="expressNo" #expressNo="ngModel">
+        <div [hidden]="expressNo.valid || expressNo.pristine"
+              class="alert alert-danger">
+          expressNo is required
+        </div>
+        <label for="remarks">备注：</label>
+        <input class="form-control" id="remarks" type="text"
+               [(ngModel)]="deliverData.remarks"
+                name="remarks">
+
+        <button type="submit" class="btn btn-success" [disabled]="!deliverForm.form.valid">submit</button>
+        <button type="submit" class="btn btn-default" (click)="deliverModalref.hide()">cancel</button>
+
+        <p>Form value: {{ deliverForm.value | json }}</p>
+      </form>
+    </div>
+  </div>
+</template>
+
+
+
+
+
+<!--<nav>-->
+  <!--<a routerLink="/trade/tradeDetail" class="navbar">detail</a>-->
+  <!--<a routerLink="/trade/tradeList" class="navbar">add</a>-->
+<!--</nav>-->

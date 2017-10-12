@@ -1,0 +1,62 @@
+<section class="main product-add">
+  <form #productForm="ngForm">
+    <div class="form-group">
+      <!--每个 input 元素都有id属性，label元素的for属性用它来匹配到对应的输入控件。-->
+      <!--每个 input 元素都有name属性，Angular 表单用它注册控件。-->
+      <label for="title">商品标题</label>
+      <input type="text" class="form-control" id="title"
+             required
+             [(ngModel)]="model.title" name="title"
+             #title="ngModel">
+      <!--模版引用变量#title可以访问模版中输入框的angular控件，把#title
+      赋值为ngModel，是因为ngModel指令的exportAs属性设置成了"ngModel"-->
+      <!--把div的hidden属性绑定到title控件的属性，这样就可以控制"title"字段错误信息
+      的可见性 valid（有效） pristine（全新）-->
+      <div [hidden]="title.valid || title.pristine"
+           class="alert alert-danger">
+        商品标题必填
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="subTitle">商品副标题</label>
+      <input type="text" class="form-control" id="subTitle"
+             [(ngModel)]="model.subTitle" name="subTitle">
+    </div>
+    <div class="form-group">
+      <label for="imgUrl">商品图片</label>
+      <input type="text" class="form-control" id="imgUrl"
+             required
+             [(ngModel)]="model.imgUrl" name="imgUrl"
+             #imgUrl="ngModel">
+      <div [hidden]="imgUrl.valid || imgUrl.pristine"
+           class="alert alert-danger">
+        商品图片必填
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="proCategory">商品分类</label>
+      <select class="form-control" id="proCategory"
+              required [(ngModel)]="model.proCategory" name="proCategory"
+              #proCategory="ngModel">
+        <option *ngFor="let item of proCategorys" [value]="item">{{item}}</option>
+      </select>
+      <div [hidden]="proCategory.valid || proCategory.pristine"
+           class="alert alert-danger">
+        商品分类必填
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="productPrice">商品价格</label>
+      <input type="text" class="form-control" id="productPrice"
+             required [(ngModel)]="model.productPrice" name="productPrice"
+             #productPrice="ngModel">
+      <div [hidden]="productPrice.valid || productPrice.pristine"
+           class="alert alert-danger">
+        商品价格必填
+      </div>
+    </div>
+
+  <button type="submit" class="btn btn-success">提交</button>
+
+  </form>
+</section>

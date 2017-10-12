@@ -1,0 +1,57 @@
+<div class="my-nav">
+  <nav>
+    <ul class="menu">
+      <li class="menu-item" *ngFor="let item of menu">
+        <div class="menu-title" (click)="expandMenu(item.id)">
+          <span class="glyphicon title-icon {{item.icon}}"></span>
+          {{item.title}}
+          <span class="glyphicon glyphicon-menu-right menu-icon" *ngIf="activeMenu !== item.id"></span>
+          <span class="glyphicon glyphicon-menu-down menu-icon" *ngIf="activeMenu === item.id"></span>
+        </div>
+        <ul class="sub-menu" *ngIf="item.subMenu.length > 0 && activeMenu === item.id">
+          <li class="sub-menu-item menu-title" *ngFor="let sub of item.subMenu">
+            <a routerLink="{{sub.link}}" routerLinkActive="active">
+              <span>{{sub.title}}</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <!--<li class="menu-item">-->
+        <!--<div class="menu-title">-->
+          <!--订单模块-->
+          <!--<span class="glyphicon glyphicon-menu-right menu-icon"></span>-->
+        <!--</div>-->
+        <!--<ul class="sub-menu">-->
+          <!--<li class="sub-menu-item menu-title">-->
+            <!--<a routerLink="/trade/tradeList" routerLinkActive="active">-->
+              <!--<span>订单列表</span>-->
+            <!--</a>-->
+          <!--</li>-->
+          <!--<li class="sub-menu-item menu-title">-->
+            <!--<a routerLink="/trade/tradeDetail" routerLinkActive="active">-->
+              <!--<span>订单详情</span>-->
+            <!--</a>-->
+          <!--</li>-->
+        <!--</ul>-->
+      <!--</li>-->
+      <!--<li class="menu-item">-->
+        <!--<div class="menu-title">-->
+          <!--用户模块-->
+          <!--<i class="glyphicon glyphicon-menu-right menu-icon"></i>-->
+        <!--</div>-->
+        <!--<ul class="sub-menu">-->
+          <!--<li class="sub-menu-item menu-title">-->
+            <!--<a routerLink="/user/userList" routerLinkActive="active">-->
+              <!--<span>用户列表</span>-->
+            <!--</a>-->
+          <!--</li>-->
+          <!--<li class="sub-menu-item menu-title">-->
+            <!--<a routerLink="/user/userDetail" routerLinkActive="active">-->
+              <!--<span>用户详情</span>-->
+            <!--</a>-->
+          <!--</li>-->
+        <!--</ul>-->
+      <!--</li>-->
+    </ul>
+  </nav>
+</div>
