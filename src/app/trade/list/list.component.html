@@ -14,9 +14,11 @@
         Add
       </button>
       <p *ngFor="let item of heros">{{item.name}}</p>
+      <button (click)="getOrder()">save</button>
+      <p>{{order.orderNo}}</p>
     </div>
   </section>
-  <section class="content">
+  <section class="main content">
     <div class="table-list">
       <table class="table table-bordered table-hover">
         <thead>
@@ -54,7 +56,7 @@
               <!--</div>-->
             <!--</td>-->
             <td width="10%">
-              <a class="ope">订单详情</a>
+              <a class="ope" routerLink="/trade/tradeDetail">订单详情</a>
             </td>
             <td width="10%">
               <span>{{order.buyerName}}</span>

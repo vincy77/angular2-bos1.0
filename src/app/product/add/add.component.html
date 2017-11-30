@@ -1,12 +1,17 @@
-<section class="main product-add">
-  <form #productForm="ngForm">
+
+<section class="product-add">
+  <ol class="breadcrumb">
+    <li class="active">创建商品</li>
+    <!--<li><a href="#">Library</a></li>-->
+  </ol>
+  <form (ngSubmit)="onSubmit(productForm)" #productForm="ngForm" class="main">
     <div class="form-group">
       <!--每个 input 元素都有id属性，label元素的for属性用它来匹配到对应的输入控件。-->
       <!--每个 input 元素都有name属性，Angular 表单用它注册控件。-->
       <label for="title">商品标题</label>
       <input type="text" class="form-control" id="title"
-             required
-             [(ngModel)]="model.title" name="title"
+             required placeholder="商品标题"
+             [(ngModel)]="productData.productTitle" name="title"
              #title="ngModel">
       <!--模版引用变量#title可以访问模版中输入框的angular控件，把#title
       赋值为ngModel，是因为ngModel指令的exportAs属性设置成了"ngModel"-->
@@ -19,14 +24,13 @@
     </div>
     <div class="form-group">
       <label for="subTitle">商品副标题</label>
-      <input type="text" class="form-control" id="subTitle"
-             [(ngModel)]="model.subTitle" name="subTitle">
+      <input type="text" class="form-control" id="subTitle" placeholder="商品副标题"
+             [(ngModel)]="productData.productSubTitle" name="subTitle">
     </div>
     <div class="form-group">
       <label for="imgUrl">商品图片</label>
       <input type="text" class="form-control" id="imgUrl"
-             required
-             [(ngModel)]="model.imgUrl" name="imgUrl"
+             [(ngModel)]="productData.imgUrl" name="imgUrl"
              #imgUrl="ngModel">
       <div [hidden]="imgUrl.valid || imgUrl.pristine"
            class="alert alert-danger">
@@ -35,11 +39,42 @@
     </div>
     <div class="form-group">
       <label for="proCategory">商品分类</label>
-      <select class="form-control" id="proCategory"
-              required [(ngModel)]="model.proCategory" name="proCategory"
-              #proCategory="ngModel">
-        <option *ngFor="let item of proCategorys" [value]="item">{{item}}</option>
-      </select>
+      <div class="btn-group" dropdown>
+        <input type="text" dropdownToggle class="form-control" id="proCategory"
+               required
+               [(ngModel)]="productData.proCategory" name="proCategory"
+               #proCategory="ngModel">
+        <span class="caret my-caret"></span>
+        <ul *dropdownMenu class="dropdown-menu" role="menu">
+          <li role="menuitem" *ngFor="let item of proCategorys" (click)="selectChange(item)">
+            <span class="dropdown-item">{{item.text}}</span>
+          </li>
+
+          <!--<li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>-->
+          <!--<li role="menuitem"><a class="dropdown-item" href="#">Another action</a></li>-->
+          <!--<li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>-->
+          <!--<li class="divider dropdown-divider"></li>-->
+          <!--<li role="menuitem"><a class="dropdown-item" href="#">Separated link</a>-->
+          <!--</li>-->
+        </ul>
+      </div>
+      <!--<select class="form-control" id="proCategory" placeholder="商品分类"-->
+              <!--required [(ngModel)]="productData.proCategory" name="proCategory"-->
+              <!--#proCategory="ngModel">-->
+        <!--<option class="select-opt" *ngFor="let item of proCategorys" [value]="item.id">{{item.text}}</option>-->
+      <!--</select>-->
+      <!--<ng-select id="proCategory"-->
+                 <!--[allowClear]="true"-->
+                 <!--[items]="proCategorys"-->
+                 <!--(selected)="selected($event)"-->
+                 <!--[(ngModel)]="productData.proCategory"-->
+                 <!--name="proCategory"-->
+                 <!--#proCategory="ngModel"-->
+                 <!--placeholder="No city selected">-->
+      <!--</ng-select>-->
+      <!--<select [(ngModel)]="productData.proCategory" name="proCategory" id="proCategory" #proCategory="ngModel">-->
+        <!--<option *ngFor="let item of proCategorys" [value]="item.id">{{ item.text }}</option>-->
+      <!--</select>-->
       <div [hidden]="proCategory.valid || proCategory.pristine"
            class="alert alert-danger">
         商品分类必填
@@ -47,8 +82,8 @@
     </div>
     <div class="form-group">
       <label for="productPrice">商品价格</label>
-      <input type="text" class="form-control" id="productPrice"
-             required [(ngModel)]="model.productPrice" name="productPrice"
+      <input type="text" class="form-control" id="productPrice" placeholder="商品价格"
+             required [(ngModel)]="productData.productPrice" name="productPrice"
              #productPrice="ngModel">
       <div [hidden]="productPrice.valid || productPrice.pristine"
            class="alert alert-danger">
@@ -56,7 +91,7 @@
       </div>
     </div>
 
-  <button type="submit" class="btn btn-success">提交</button>
+  <button type="submit" [disabled]="!productForm.form.valid" class="btn btn-success">提交</button>
 
   </form>
 </section>

@@ -1,4 +1,8 @@
-<div class="trade-list">
+<div class="product-list" #productListTemplate>
+  <ol class="breadcrumb">
+    <li class="active">商品列表</li>
+    <!--<li><a href="#">Library</a></li>-->
+  </ol>
   <ul class="nav nav-pills">
     <li role="presentation" *ngFor="let item of nav.options"
         [class.active]="item.key === nav.current.key"
@@ -6,29 +10,20 @@
       <a href="javascript:">{{item.value}}</a>
     </li>
   </ul>
-  <section>
-    <button (click)="save()">save</button>
-    <div>
-      <label>Hero name:</label> <input #heroName />
-      <button (click)="add(heroName.value); heroName.value=''">
-        Add
-      </button>
-      <p *ngFor="let item of heros">{{item.name}}</p>
-    </div>
-  </section>
-  <section class="content">
+  <alert type="success">
+    <strong>Well done!</strong> You successfully read this important alert message.
+  </alert>
+  <button (click)="myAlert()">alert</button>
+  <section class="main content">
     <div class="table-list">
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
             <!--<th>订单编号</th>-->
             <th colspan="2">商品详情</th>
-            <th>订单详情</th>
-            <th>买家</th>
-            <th>收货人</th>
-            <th>总计</th>
+            <th>分类</th>
+            <th>价格</th>
             <th>操作</th>
-            <th>发货</th>
           </tr>
         </thead>
         <tbody>
@@ -42,23 +37,12 @@
               </div>
             </td>
             <td width="10%">
-              <a class="ope">订单详情</a>
+              <span>{{product.proCategory | productCategory}}</span>
             </td>
+            <td width="10%">{{product.productPrice}}</td>
             <td width="10%">
-              <span>{{product.buyerName}}</span>
-              <br />
-              <span>{{product.consigneePhone}}</span>
-            </td>
-            <td width="10%">
-              <span>{{product.consignee}}</span>
-              <br>
-              <span class="ope" (click)="viewAddress(viewAddrTemplate, product)">查看地址</span>
-            </td>
-            <td width="10%">总计</td>
-            <td width="10%">操作</td>
-            <td width="10%">
-              <button class="btn btn-success" (click)="deliver(deliverTemplate, product)">上架</button>
-              <button class="btn btn-success" (click)="deliver(deliverTemplate, product)">下架</button>
+              <a class="sale-btn" (click)="onSale(saleTemplate, product, 1)">上架</a>
+              <a class="sale-btn" (click)="onSale(saleTemplate, product, 0)">下架</a>
             </td>
           </tr>
         </tbody>
@@ -90,64 +74,36 @@
     </div>
   </div>
 </div>
-
-
-<template #viewAddrTemplate>
-  <div class="view-address-modal">
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">收货地址</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="viewAddrModalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <label>收件人：</label>
-      <span>{{viewAddressData.consignee}}</span>
-      <label>联系电话：</label>
-      <span>{{viewAddressData.consigneePhone}}</span>
-      <label>收件地址：</label>
-      <span>{{title}}</span>
-    </div>
+<ng-template #saleTemplate>
+  <div class="sale-modal modal-body text-center">
+    <p>{{saleData.message}}</p>
+    <button type="button" class="btn btn-default" (click)="confirm()" >Yes</button>
+    <button type="button" class="btn btn-primary" (click)="decline()" >No</button>
   </div>
-</template>
-<template #deliverTemplate>
-  <div class="deliver-modal">
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">发货</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="deliverModalref.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <form (ngSubmit)="onSubmit()" #deliverForm="ngForm">
-        <label for="expressCompany">快递公司：</label>
-        <select class="form-control" id="expressCompany" required
-                [(ngModel)]="deliverData.expressCompany" name="expressCompany">
-          <option class="option" *ngFor="let company of expressCompanys" [value]="company.key">
-            {{company.name}}
-          </option>
-        </select>
-        <label for="expressNo">快递单号：</label>
-        <input class="form-control" id="expressNo" type="number"
-                required [(ngModel)]="deliverData.expressNo"
-                name="expressNo" #expressNo="ngModel">
-        <div [hidden]="expressNo.valid || expressNo.pristine"
-              class="alert alert-danger">
-          expressNo is required
-        </div>
-        <label for="remarks">备注：</label>
-        <input class="form-control" id="remarks" type="text"
-               [(ngModel)]="deliverData.remarks"
-                name="remarks">
-
-        <button type="submit" class="btn btn-success" [disabled]="!deliverForm.form.valid">submit</button>
-        <button type="submit" class="btn btn-default" (click)="deliverModalref.hide()">cancel</button>
-
-        <p>Form value: {{ deliverForm.value | json }}</p>
-      </form>
-    </div>
-  </div>
-</template>
+</ng-template>
+<!--<template #saleTemplate>-->
+  <!--<div class="sale-modal">-->
+    <!--<div class="modal-header">-->
+      <!--<h4 class="modal-title pull-left">-->
+        <!--<span *ngIf="saleData.type == 1">上架</span>-->
+        <!--<span *ngIf="saleData.type == 0">下架</span>-->
+      <!--</h4>-->
+      <!--<button type="button" class="close pull-right" aria-label="Close" (click)="saleModalref.hide()">-->
+        <!--<span aria-hidden="true">&times;</span>-->
+      <!--</button>-->
+    <!--</div>-->
+    <!--<div class="modal-body">-->
+      <!--<form (ngSubmit)="onSubmit()" #deliverForm="ngForm">-->
+        <!--<p>确定-->
+          <!--<span *ngIf="saleData.type == 1">上架</span>-->
+          <!--<span *ngIf="saleData.type == 0">下架</span>-->
+          <!--该商品？</p>-->
+        <!--<button type="submit" class="btn btn-success" [disabled]="!deliverForm.form.valid">submit</button>-->
+        <!--<button type="submit" class="btn btn-default" (click)="saleModalref.hide()">cancel</button>-->
+      <!--</form>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</template>-->
 
 
 

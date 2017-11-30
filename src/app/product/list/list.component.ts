@@ -1,16 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+//import { Component, OnInit } from '@angular/core';
+import {
+  Component, OnInit, AfterViewInit
+} from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+import { MyAlertService } from '../../core/my-alert.service';
 
-
-//import { ProductService } from '../product.service';
+import { ProductService } from '../shared/product.service';
 //import { Order } from '../trade';
 
 
 @Component({
   selector: 'product-list',
   templateUrl: './list.component.html',
-  styleUrls: ['list.component.less']
+  styleUrls: ['list.component.less'],
+  providers: [
+    //ProductService
+  ]
 })
 export class ProductListComponent implements OnInit {
   nav = {
@@ -34,40 +40,9 @@ export class ProductListComponent implements OnInit {
     }
   };
   title = 'bos2';
-  //发货弹窗数据
-  deliverData = {};
-  expressCompanys = [
-    {
-      name: '中通',
-      key: 'zt'
-    },
-    {
-      name: '圆通',
-      key: 'yt'
-    },
-    {
-      name: '申通',
-      key: 'st'
-    },
-    {
-      name: '韵达',
-      key: 'yd'
-    },
-    {
-      name: '顺丰',
-      key: 'sf'
-    }
-  ];
-  //查看地址弹窗显示数据
-  viewAddressData = {};
-  //订单列表
-  orderList = [];
-  // orders: Order[];
-  orders = [];
+  //上下架弹窗数据
+  saleData = {};
   productList = [];
-  hero = '';
-  selectedHero = '';
-
 
   public maxSize:number = 5;
   public bigTotalItems:number = 175;
@@ -76,31 +51,38 @@ export class ProductListComponent implements OnInit {
 
   constructor(
     private modalService: BsModalService,
-    //private productService: ProductService
+    private productService: ProductService,
+    private myAlertService: MyAlertService
   ) {}
-
+  myAlert() {
+    this.myAlertService.error('errrrr');
+  }
 
   onSubmit() {
-    console.log(this.deliverData);
+    console.log(this.saleData);
   }
 
   //查看地址弹窗
-  public viewAddrModalRef: BsModalRef;
-  public deliverModalref: BsModalRef;
+ // public viewAddrModalRef: BsModalRef;
+  public saleModalref: BsModalRef;
 
-  public deliver(template, order) {
-    this.deliverData = {};
-    this.deliverModalref = this.modalService.show(template);
+  // 上架下架
+  public onSale(template, product, type) {
+    this.saleData = {
+      type: type,
+      product: product,
+      message: '确定上架该商品？'
+    };
+    this.saleModalref = this.modalService.show(template, {class: 'modal-sm'});
+  }
+  confirm(): void {
+    //this.message = 'Confirmed!';
+    this.saleModalref.hide();
   }
 
-  public viewAddress(template, order) {
-    console.log(order);
-    this.viewAddressData = {
-      consignee: order.consignee,
-      consigneePhone: order.consigneePhone,
-    };
-    console.log(this.viewAddressData);
-    this.viewAddrModalRef = this.modalService.show(template);
+  decline(): void {
+    //this.message = 'Declined!';
+    this.saleModalref.hide();
   }
 
   navChange(nav): void {
@@ -115,11 +97,24 @@ export class ProductListComponent implements OnInit {
     console.log('Page changed to: ' + event.page);
     console.log('Number items per page: ' + event.itemsPerPage);
   }
+  getProducts(data: any) {
+    this.productService
+      .getProducts(data)
+      .then(products=> {
+        console.log(products);
+        return this.productList = products;
+      });
+  }
 
 
   ngOnInit() {
     console.log(this.nav.current);
-    //this.getOrders(0);
+    this.getProducts(0);
+    console.log(this.productService.isLoggedIn);
+    this.productService.login();
+    console.log(this.productService.isLoggedIn);
+
+
   }
 
 }

@@ -2,7 +2,7 @@
   padding: 8px 0;
   vertical-align: middle;
 }
-.trade-list{
+.product-list{
   .content{
     margin: 20px 0;
     .pagination{
@@ -22,16 +22,6 @@
       th{
         text-align: center;
       }
-      .order-detail{
-        text-align: left;
-        padding-left: 10px;
-        span{
-          margin-right: 10px;
-          em{
-            color: #337ab7;
-          }
-        }
-      }
       .product-detail{
         text-align: left;
         border-bottom:1px solid #aaa;
@@ -39,48 +29,18 @@
       .product-detail:last-child{
         border-bottom: none;
       }
+      .sale-btn{
+        color: #337ab7;
+        cursor: pointer;
+      }
     }
   }
 }
-.view-address-modal{
-  height: 300px!important;
-  .modal-body{
-    label{
-      height: 30px;
-      line-height: 30px;
-      width: 20%;
-      text-align: right;
-    }
-    span{
-      display: inline-block;
-      height: 30px;
-      line-height: 30px;
-      width: 70%;
-    }
-  }
-
-}
-.deliver-modal{
+.sale-modal{
   //height: 300px!important;
   .modal-body{
-    label{
-      height: 30px;
-      line-height: 30px;
-      width: 20%;
-      text-align: right;
-    }
-    input, select{
-      display: inline-block;
-      height: 30px;
-      line-height: 30px;
-      width: 70%;
-    }
-    .alert{
-      margin-left: 21%;
-      width: 70%;
-    }
-    .option{
-      margin-left: 20px;
+    form{
+      text-align: center;
     }
   }
 

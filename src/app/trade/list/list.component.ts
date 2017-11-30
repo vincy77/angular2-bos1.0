@@ -2,15 +2,23 @@ import { Component, OnInit } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 
-
-import { TradeService } from '../trade.service';
+import { TradeService } from '../shared/trade.service';
 //import { Order } from '../trade';
 
 
 @Component({
   selector: 'trade-list',
   templateUrl: './list.component.html',
-  styleUrls: ['list.component.less']
+  styleUrls: ['list.component.less'],
+// Angular 4.X拥有多级依赖注入系统，在一个注入器的范围内，依赖都是单例的。
+// 它使用冒泡机制，当一个组件申请获得一个依赖时，Angular 先尝试用该组件自己的注入器来满足它。
+// 如果该组件的注入器没有找到对应的提供商，它就把这个申请转给它父组件的注入器来处理。
+// 如果那个注入器也无法满足这个申请，它就继续转给它的父组件的注入器，
+// 即会先在component中找TradeService，找不到再去module中找，
+// 区别在不同的地方注入同样的Service，会使用不同的实例，所以会导致结果可能不同，
+// 即在component注入，service结果只在当前component中起作用，在module中注入，
+// 结果会在module下的所有component中起作用
+// providers: [TradeService] //在ngModule里面写
 })
 export class TradeListComponent implements OnInit {
   nav = {
@@ -78,6 +86,7 @@ export class TradeListComponent implements OnInit {
   orders = [];
   heros = [];
   hero = '';
+  order = {};
   selectedHero = '';
 
 
@@ -90,9 +99,16 @@ export class TradeListComponent implements OnInit {
     private modalService: BsModalService,
     private tradeService: TradeService
   ) {}
-
+  getOrder(): void {
+    this.tradeService
+      .getOrder(1)
+      .then(orders => {
+        console.log(orders);
+        return this.order = orders;
+      });
+  }
   save(): void {
-    this.tradeService.update(this.hero)
+    this.tradeService.update(1111)
       .then(() => this.goBack());
   }
   goBack(): void {

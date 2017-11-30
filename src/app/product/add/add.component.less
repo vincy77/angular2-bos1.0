@@ -1,21 +1,52 @@
-.main{
-  border:1px solid #ccc;
-  box-shadow: 10px 10px 10px #ccc;
-  padding: 10px;
-  height: calc(~'100% - 50px');
-  background-color: #fff;
-  border-radius: 5px;
-}
 .product-add{
-  .form-group{
-    label{
-      width: 100px;
-      text-align: right;
-      padding-right: 10px;
-    }
-    .form-control{
-      width: calc(~'100% - 120px');
-      display: inline-block;
+  form{
+    margin-top: 20px;
+    .form-group{
+      margin-bottom: 20px;
+      label{
+        width: 120px;
+        text-align: right;
+        padding-right: 10px;
+        font-weight: 400;
+      }
+      .form-control{
+        width: calc(~'100% - 180px');
+        display: inline-block;
+        height: 40px;
+      }
+      .btn-group{
+        width: calc(~'100% - 180px');
+        cursor: pointer;
+        input{
+          width: 100%;
+          cursor: pointer;
+        }
+        .my-caret{
+          position: absolute;
+          top: 18px;
+          right: 10px;
+        }
+        .dropdown-menu{
+          li{
+            width: 100%;
+            .dropdown-item{
+              display: block;
+              width: 100%;
+              padding: .25rem 1.5rem;
+              clear: both;
+              font-weight: 400;
+              color: #212529;
+              text-align: inherit;
+              white-space: nowrap;
+              background: 0 0;
+              border: 0;
+            }
+          }
+        }
+
+      }
+
     }
   }
+
 }

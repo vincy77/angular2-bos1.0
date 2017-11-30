@@ -97,4 +97,18 @@ a {
   margin-left: 104px;
   padding: 10px 15px;
 }
-
+.main{
+  border:1px solid #ccc;
+  box-shadow: 10px 10px 10px #ccc;
+  padding: 10px;
+  height: calc(100% - 50px);
+  background-color: #fff;
+  border-radius: 5px;
+}
+.breadcrumb{
+  background-color: #fafafa;
+  margin-bottom: 30px;
+}
+.breadcrumb>.active{
+  color: darkcyan;
+}

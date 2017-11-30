@@ -3,10 +3,12 @@ export class InMemoryDataService implements InMemoryDbService {
   createDb() {
     let products = [
       {
+        id: 1,
         productTitle: 'lalalallalalal',
         productSubTitle: 'ioioioioioioioioioioio',
-        price: 22,
-        productImg: '',
+        proCategory: 1,
+        productPrice: 22,
+        imgUrl: '',
         status: ''
       }
     ];

@@ -3,7 +3,6 @@ export class InMemoryDataService implements InMemoryDbService {
   createDb() {
     let orders = [
       {
-        id: 1,
         orderNo: 11111,
         orderTime: '2017-01-01',
         shopName: 'yyyyy',
@@ -38,7 +37,6 @@ export class InMemoryDataService implements InMemoryDbService {
         status: ''
       },
       {
-        id: 2,
         orderNo: 22222222,
         orderTime: '2017-01-03',
         shopName: '公告公告',

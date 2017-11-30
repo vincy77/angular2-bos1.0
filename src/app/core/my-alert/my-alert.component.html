@@ -1,0 +1,7 @@
+<div class="my-alert">
+
+</div>
+<div class="my-alert-main" [ngClass]="currentClass">
+  <p>{{type}} {{message}} {{currentClass}}</p>
+  <button class="btn btn-primary" (click)="output.next(type)">确定</button>
+</div>

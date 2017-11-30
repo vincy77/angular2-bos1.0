@@ -1,40 +1,40 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { CoreModule } from './core/core.module';
+import { SharedModule } from './shared/shared.module';
+
 
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
+//import { AppRoutingModule } from './app-routing.module';
 
-// import {LayoutComponent } from './layout/layout.component';
-import {HeaderComponent} from './layout/header/header.component';
-import {NavComponent} from './layout/nav/nav.component';
+// import {HeaderComponent} from './layout/header/header.component';
+// import {NavComponent} from './layout/nav/nav.component';
 
-// import { AlertModule } from 'ngx-bootstrap';
-// import { PaginationModule } from 'ngx-bootstrap/pagination';
-// import { ButtonsModule } from 'ngx-bootstrap';
-import { AlertModule, ButtonsModule, PaginationModule,  ModalModule} from 'ngx-bootstrap';
+
+import { MyAlertComponent } from './core/my-alert/my-alert.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-   // AppRoutingModule
-   //  LayoutComponent,
-    HeaderComponent,
-    NavComponent
+   //  HeaderComponent,
+   //  NavComponent,
+    MyAlertComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule,
-    HttpModule,
-    AppRoutingModule,
-    AlertModule.forRoot(),
-    PaginationModule.forRoot(),
-    ButtonsModule.forRoot(),
-    ModalModule.forRoot()
+    CoreModule,
+    SharedModule,
+    //AppRoutingModule
   ],
-  providers: [],
+  exports: [
+    SharedModule
+  ],
+  providers: [
+  ],
+  entryComponents: [
+    MyAlertComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
