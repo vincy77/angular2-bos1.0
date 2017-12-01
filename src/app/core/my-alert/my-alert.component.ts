@@ -8,10 +8,25 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class MyAlertComponent implements OnInit{
   @Input() type: string = '';
   @Input() message: string = '';
-  @Output() output = new EventEmitter();
+  @Output() outputConfirm = new EventEmitter();
+  @Output() outputDecline = new EventEmitter();
 
 
   currentClass = '';
+
+  confirm() {
+    event.stopPropagation();
+    this.outputConfirm.next(event);
+  }
+  decline(event: any) {
+    event.stopPropagation();
+    this.outputDecline.next(event);
+  }
+  // onClick(event: any) {
+  //   event.stopPropagation();
+  //   this.outputConfirm.next(event);
+  // }
+
 
   ngOnInit() {
     this.currentClass = this.type;

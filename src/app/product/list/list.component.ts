@@ -55,7 +55,12 @@ export class ProductListComponent implements OnInit {
     private myAlertService: MyAlertService
   ) {}
   myAlert() {
-    this.myAlertService.error('errrrr');
+    this.myAlertService.confirmDialog('confirm', function (e) {
+      console.log('kkkkkkkkk');
+    })
+  }
+  myAlert2() {
+    this.myAlertService.errorMsg('errrrr');
   }
 
   onSubmit() {

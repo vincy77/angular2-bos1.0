@@ -13,18 +13,39 @@ export class MyAlertService {
     private resolver: ComponentFactoryResolver
   ) {}
   template;
+  // 在appComponent中调用该方法初始化 template模版（是否有别的方法，该服务中无法获取组件中设置的模版变量）
   getTemplate(temp) {
     this.template = temp;
   }
-  success(message: string) {
+  // 成功信息弹出窗
+  successMsg(message: string) {
     this.createComponent(message, 'success');
+    this.closeDialog();
   }
-  warn(message: string) {
+  // 警告信息弹出窗
+  warnMsg(message: string) {
     this.createComponent(message, 'warn');
+    this.closeDialog();
   }
-  error(message: string) {
+  // 失败信息弹出窗
+  errorMsg(message: string) {
     this.createComponent(message, 'error');
+    this.closeDialog();
   }
+  // 确认框
+  confirmDialog(message: string, fun) {
+    this.createComponent(message, 'confirm');
+    this.componentRef.instance.outputConfirm.subscribe(
+      (msg: string) => {
+        console.log(msg);
+        this.ngOnDestroy();
+        fun();
+        return msg;
+      }
+    );
+    this.closeDialog();
+  }
+  // 动态插入信息弹出窗
   createComponent(message: string, type: string) {
     this.container = this.template;
     console.log(this.container);
@@ -34,15 +55,19 @@ export class MyAlertService {
     this.componentRef = this.container.createComponent(factory);
     this.componentRef.instance.type = type;
     this.componentRef.instance.message = message;
-    this.componentRef.instance.output.subscribe(
-      (msg: string) => {
-        console.log(msg);
-        this.ngOnDestroy();
-      }
-    );
   }
+  // 销毁动态插入的组件（dialog）
   ngOnDestroy() {
     this.componentRef.destroy()
   }
-
+  // 提示框确认按钮和确认框取消按钮点击事件
+  closeDialog() {
+    this.componentRef.instance.outputDecline.subscribe(
+      (msg: string) => {
+        console.log(msg);
+        this.ngOnDestroy();
+        return msg;
+      }
+    );
+  }
 }

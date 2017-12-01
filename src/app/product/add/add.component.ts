@@ -36,18 +36,20 @@ export class ProductAddComponent implements OnInit {
     console.log(item);
   }
   onSubmit(productForm) {
-    this.submitted = true;
-    console.log(productForm.value);
-    console.log(this.productData);
-    //name = name.trim();
-    //if(!name) {return}
-    this.productService.create(this.productData)
-      .then(hero => {
-        //this.heros.push(hero);
-        //this.selectedHero = null;
-        this.myAlertService.success('添加成功！');
-      })
-
+    let that = this;
+    this.myAlertService.confirmDialog('确认提交吗？', function (e) {
+      that.submitted = true;
+      console.log(productForm.value);
+      console.log(that.productData);
+      //name = name.trim();
+      //if(!name) {return}
+      that.productService.create(that.productData)
+        .then(hero => {
+          //this.heros.push(hero);
+          //this.selectedHero = null;
+          that.myAlertService.successMsg('添加成功！');
+        });
+    });
   }
   public selected(value:any):void {
     console.log('Selected value is: ', value);
