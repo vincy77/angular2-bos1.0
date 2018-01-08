@@ -1,14 +1,7 @@
-//import { Component, OnInit } from '@angular/core';
-import {
-  Component, OnInit, AfterViewInit
-} from '@angular/core';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+import { Component, OnInit } from '@angular/core';
 import { MyAlertService } from '../../core/my-alert.service';
 
 import { ProductService } from '../shared/product.service';
-//import { Order } from '../trade';
-
 
 @Component({
   selector: 'product-list',
@@ -43,6 +36,7 @@ export class ProductListComponent implements OnInit {
   //上下架弹窗数据
   saleData = {};
   productList = [];
+  condition: boolean = false;
 
   public maxSize:number = 5;
   public bigTotalItems:number = 175;
@@ -50,44 +44,32 @@ export class ProductListComponent implements OnInit {
   public numPages:number = 0;
 
   constructor(
-    private modalService: BsModalService,
     private productService: ProductService,
     private myAlertService: MyAlertService
   ) {}
   myAlert() {
     this.myAlertService.confirmDialog('confirm', function (e) {
       console.log('kkkkkkkkk');
-    })
+    });
   }
   myAlert2() {
     this.myAlertService.errorMsg('errrrr');
   }
 
-  onSubmit() {
-    console.log(this.saleData);
-  }
-
-  //查看地址弹窗
- // public viewAddrModalRef: BsModalRef;
-  public saleModalref: BsModalRef;
-
   // 上架下架
-  public onSale(template, product, type) {
-    this.saleData = {
-      type: type,
-      product: product,
-      message: '确定上架该商品？'
-    };
-    this.saleModalref = this.modalService.show(template, {class: 'modal-sm'});
-  }
-  confirm(): void {
-    //this.message = 'Confirmed!';
-    this.saleModalref.hide();
-  }
-
-  decline(): void {
-    //this.message = 'Declined!';
-    this.saleModalref.hide();
+  public onSale(product, type) {
+    var that = this;
+    var message = '确定上架该商品？';
+    if(type === 0) {
+      message = '确定下架该商品？';
+    }
+    that.myAlertService.confirmDialog(message, function (e) {
+      that.saleData = {
+        type: type,
+        product: product
+      };
+      that.myAlertService.errorMsg('失败');
+    });
   }
 
   navChange(nav): void {

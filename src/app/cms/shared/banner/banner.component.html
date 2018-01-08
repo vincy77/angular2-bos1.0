@@ -1,0 +1,163 @@
+
+<div class="cms-banner">
+  <div class="form-group form-group-img">
+    <label>推送图片</label>
+    <input type="text" class="form-control" required
+           [(ngModel)]="data.imgUrl" name="imgUrl{{index}}"
+           #imgUrl="ngModel">
+    <div [hidden]="imgUrl.valid || imgUrl.pristine"
+         class="alert alert-danger">
+      商品图片必填
+    </div>
+  </div>
+  <div class="form-group form-group-url">
+    <label>推送链接</label>
+    <input type="text" class="form-control" placeholder="商品价格"
+           required [(ngModel)]="data.actUrl" name="actUrl{{index}}"
+           #actUrl="ngModel">
+    <div [hidden]="actUrl.valid || actUrl.pristine"
+         class="alert alert-danger">
+      商品价格必填
+    </div>
+  </div>
+  <!--<form (ngSubmit)="onSubmit(mainActForm)" #mainActForm="ngForm" class="main cb">-->
+    <!--<ul class="img-form-group">-->
+      <!--<li *ngFor="let mainAct of indexData.mainAct let i = index">-->
+        <!--<div class="form-group form-group-img">-->
+          <!--<label>推送图片</label>-->
+          <!--<input type="text" class="form-control" required-->
+                 <!--[(ngModel)]="mainAct.imgUrl" name="imgUrl{{i}}"-->
+                 <!--#tempImg="ngModel">-->
+          <!--<div [hidden]="tempImg.valid || tempImg.pristine"-->
+               <!--class="alert alert-danger">-->
+            <!--商品图片必填-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group form-group-url">-->
+          <!--<label>推送链接</label>-->
+          <!--<input type="text" class="form-control" placeholder="商品价格"-->
+                 <!--required [(ngModel)]="mainAct.actUrl" name="actUrl{{i}}"-->
+                 <!--#tempUrl="ngModel">-->
+          <!--<div [hidden]="tempUrl.valid || tempUrl.pristine"-->
+               <!--class="alert alert-danger">-->
+            <!--商品价格必填-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</li>-->
+    <!--</ul>-->
+    <!--<button type="submit" [disabled]="!mainActForm.form.valid" class="btn btn-success">提交</button>-->
+  <!--</form>-->
+  <!--<div class="form-group form-group-img">-->
+    <!--<label >Banner图片{{tempImg.valid}}</label>-->
+    <!--<input type="text" class="form-control" required-->
+           <!--[(ngModel)]="data.img" name="imgUrl{{index}}"-->
+           <!--#tempImg="ngModel">-->
+    <!--<div [hidden]="tempImg.valid || tempImg.pristine"-->
+         <!--class="alert alert-danger">-->
+      <!--Banner图片必填-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--<div class="form-group form-group-url">-->
+    <!--<label>Banner链接{{tempUrl.valid}}</label>-->
+    <!--<input type="text" class="form-control" placeholder="{{placeholder}}"-->
+           <!--required [(ngModel)]="data.url" name="bannerUrl{{index}}"-->
+           <!--#tempUrl="ngModel">-->
+    <!--<div [hidden]="tempUrl.valid || tempUrl.pristine"-->
+         <!--class="alert alert-danger">-->
+      <!--{{placeholder}}必填-->
+    <!--</div>-->
+  <!--</div>-->
+</div>
+<!--<div class="form-group form-group-img">-->
+  <!--<label>推送图片</label>-->
+  <!--<input type="text" class="form-control"-->
+         <!--[(ngModel)]="module.bannerImg" name="imgUrl{{i}}"-->
+         <!--#imgUrl="ngModel">-->
+  <!--<div [hidden]="imgUrl.valid || imgUrl.pristine"-->
+       <!--class="alert alert-danger">-->
+    <!--商品图片必填-->
+  <!--</div>-->
+<!--</div>-->
+<!--<div class="form-group form-group-url">-->
+  <!--<label>推送链接</label>-->
+  <!--<input type="text" class="form-control" placeholder="推送链接"-->
+         <!--required [(ngModel)]="module.bannerUrl" name="actUrl{{i}}"-->
+         <!--#actUrl="ngModel">-->
+  <!--<div [hidden]="actUrl.valid || actUrl.pristine"-->
+       <!--class="alert alert-danger">-->
+    <!--推送链接必填-->
+  <!--</div>-->
+<!--</div>-->
+
+
+
+
+<!--<div class="cms-index">-->
+  <!--<ul class="new-module">-->
+    <!--<li *ngFor="let module of newModule">-->
+      <!--<button class="btn btn-primary" (click)="addModuleBtn(module.key)">{{module.value}}</button>-->
+    <!--</li>-->
+  <!--</ul>-->
+  <!--<section class="cms-item">-->
+    <!--<ol class="breadcrumb fl">-->
+      <!--<li class="active">CMS配置-首页Banner</li>-->
+    <!--</ol>-->
+    <!--<button class="btn btn-success fr" (click)="add(indexData.indexBanner)">+新增Banner</button>-->
+    <!--<form (ngSubmit)="onSubmit(indexBannerForm)" #indexBannerForm="ngForm" class="main cb">-->
+      <!--<ul class="img-form-group">-->
+        <!--<li *ngFor="let indexBanner of indexData.indexBanner let i = index">-->
+          <!--<cms-banner [data]="indexBanner" [index]="i" [placeholder]="'banner链接'"></cms-banner>-->
+          <!--<a class="btn btn-warning" (click)="delete(i, 'indexBanner')">删除</a>-->
+        <!--</li>-->
+      <!--</ul>-->
+      <!--<p>{{indexBannerForm.form.valid}}</p>-->
+      <!--<button type="submit" [disabled]="!indexBannerForm.form.valid" class="btn btn-success">保存</button>-->
+    <!--</form>-->
+  <!--</section>-->
+
+  <!--<section class="cms-item">-->
+    <!--<ol class="breadcrumb fl">-->
+      <!--<li class="active">CMS配置-首页活动推送</li>-->
+    <!--</ol>-->
+    <!--<form (ngSubmit)="onSubmit(mainActForm)" #mainActForm="ngForm" class="main cb">-->
+      <!--<ul class="img-form-group">-->
+        <!--<li *ngFor="let mainAct of indexData.mainAct let i = index">-->
+          <!--<cms-banner [data]="mainAct" [index]="i" [placeholder]="'banner链接'"></cms-banner>-->
+        <!--</li>-->
+      <!--</ul>-->
+      <!--<button type="submit" [disabled]="!mainActForm.form.valid" class="btn btn-success">提交</button>-->
+    <!--</form>-->
+  <!--</section>-->
+
+  <!--<div *ngFor="let module of indexData.otherModule let i = index">-->
+    <!--<section class="cms-item" *ngIf="module.type == 'hotAct'">-->
+      <!--<ol class="breadcrumb fl">-->
+        <!--<li class="active">CMS配置-首页当季推送</li>-->
+      <!--</ol>-->
+      <!--<button class="btn btn-success fr" (click)="add(module.products)">+新加商品</button>-->
+      <!--<form (ngSubmit)="onSubmit(mainActForm)" #mainActForm="ngForm" class="main cb">-->
+        <!--<ul class="img-form-group">-->
+          <!--<li>-->
+            <!--<cms-banner [data]="module" [index]="i" [placeholder]="'推送链接'"></cms-banner>-->
+            <!--<ul class="selected-pro-list">-->
+              <!--<li *ngFor="let pro of module.products">-->
+                <!--<div class="form-group">-->
+                  <!--<label>商品链接</label>-->
+                  <!--<input type="text" class="form-control" placeholder="商品链接"-->
+                         <!--required [(ngModel)]="pro.productUrl" name="proUrl{{i}}"-->
+                         <!--#actUrl="ngModel">-->
+                  <!--<div [hidden]="actUrl.valid || actUrl.pristine"-->
+                       <!--class="alert alert-danger">-->
+                    <!--商品链接必填-->
+                  <!--</div>-->
+                  <!--<a class="btn btn-warning" (click)="delete(i, 'indexBanner')">选择商品</a>-->
+                <!--</div>-->
+              <!--</li>-->
+            <!--</ul>-->
+          <!--</li>-->
+        <!--</ul>-->
+        <!--<button type="submit" [disabled]="!mainActForm.form.valid" class="btn btn-success">提交</button>-->
+      <!--</form>-->
+    <!--</section>-->
+  <!--</div>-->
+<!--</div>-->

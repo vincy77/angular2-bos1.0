@@ -1,7 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+
+//自定义指令
+import { TestDirective } from './directive/test.directive';
+import { ShowAuthedDirective } from './directive/show-authed.directive';
+
 
 //bootstrap相关组件
 import { ButtonsModule, PaginationModule,  ModalModule, BsDropdownModule, AlertModule} from 'ngx-bootstrap';
@@ -28,6 +33,7 @@ const pipe = [
   exports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     ButtonsModule,
     PaginationModule,
@@ -35,10 +41,14 @@ const pipe = [
     BsDropdownModule,
     AlertModule,
     SelectModule,
-    pipe
+    pipe,
+    TestDirective,
+    ShowAuthedDirective
   ],
   declarations: [
-    pipe
+    pipe,
+    TestDirective,
+    ShowAuthedDirective
   ]
 })
 export class SharedModule { }

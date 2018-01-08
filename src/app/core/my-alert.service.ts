@@ -35,6 +35,7 @@ export class MyAlertService {
   // 确认框
   confirmDialog(message: string, fun) {
     this.createComponent(message, 'confirm');
+    console.log(this.componentRef.instance.outputConfirm);
     this.componentRef.instance.outputConfirm.subscribe(
       (msg: string) => {
         console.log(msg);

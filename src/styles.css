@@ -79,9 +79,11 @@ a {
   top:50px;
 }
 .app-content{
-  margin-left: 180px;
+  position: absolute;
+  left: 180px;
   background-color: #f9f9f9;
-  height: 100%;
+  height: calc(100% - 50px);
+  width: calc(100% - 180px);
   overflow-y: auto;
   padding: 20px;
 }
@@ -107,7 +109,7 @@ a {
 }
 .breadcrumb{
   background-color: #fafafa;
-  margin-bottom: 30px;
+  margin-bottom: 5px;
 }
 .breadcrumb>.active{
   color: darkcyan;

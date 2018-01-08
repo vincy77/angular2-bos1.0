@@ -2,7 +2,7 @@
 
 </div>
 <div class="my-alert-main" [ngClass]="currentClass">
-  <p>{{type}} {{message}} {{currentClass}}</p>
+  <p>{{message}}</p>
   <button class="btn btn-primary" *ngIf="type !== 'confirm'" (click)="decline($event)">确定1</button>
   <button type="button" class="btn btn-primary"  *ngIf="type === 'confirm'" (click)="confirm($event)" >确认2</button>
   <button type="button" class="btn btn-default"  *ngIf="type === 'confirm'" (click)="decline($event)" >取消</button>

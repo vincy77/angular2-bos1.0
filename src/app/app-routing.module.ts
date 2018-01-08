@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule,Routes } from '@angular/router';
 
 import {NotFoundComponent} from "./not-found/not-found.component";
-// import {LoginComponent} from "./login/login.component";
-// import {NeedAuthGuard} from "./login/no-auth-guard.service";
+import {MyLoginComponent} from "./core/my-login/my-login.component";
+import {MyLoginService} from "./core/my-login.service";
 
 
 const appRoutes: Routes = [
@@ -18,18 +18,21 @@ const appRoutes: Routes = [
     {
         path:'user',loadChildren:'./user/user.module#UserModule'
     },
-  {
-    path:'product',loadChildren:'./product/product.module#ProductModule'
-  },
-    // {
-    //     path:'login',component:LoginComponent
-    // },
+    {
+      path:'product',loadChildren:'./product/product.module#ProductModule'
+    },
+    {
+      path:'cms',loadChildren:'./cms/cms.module#CMSModule'
+    },
+    {
+        path:'login',component:MyLoginComponent
+    },
     //angular2 官网的404路由配置有错，通过下面2行修正
     // {
     //     path:'nofound',loadChildren:'./nofound/nofound.module#NoFoundModule'
     // },
     {
-      path: 'notfound', component: NotFoundComponent //,canActivate:[NeedAuthGuard]
+      path: 'notfound', component: NotFoundComponent ,canActivate:[MyLoginService]
     },
     {
         path:'**',redirectTo:'/notfound'

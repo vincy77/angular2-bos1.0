@@ -10,6 +10,7 @@
       <a href="javascript:">{{item.value}}</a>
     </li>
   </ul>
+  <p *Test="condition" author="semlinker">directive</p>
   <alert type="success">
     <strong>Well done!</strong> You successfully read this important alert message.
   </alert>
@@ -42,8 +43,8 @@
             </td>
             <td width="10%">{{product.productPrice}}</td>
             <td width="10%">
-              <a class="sale-btn" (click)="onSale(saleTemplate, product, 1)">上架</a>
-              <a class="sale-btn" (click)="onSale(saleTemplate, product, 0)">下架</a>
+              <a class="sale-btn" (click)="onSale(product, 1)">上架</a>
+              <a class="sale-btn" (click)="onSale(product, 0)">下架</a>
             </td>
           </tr>
         </tbody>
@@ -56,58 +57,6 @@
     </div>
   </section>
 </div>
-
-
-<button class="btn btn-primary" (click)="lgModal.show()">Large modal</button>
-
-<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title pull-left">Large modal</h4>
-        <button type="button" class="close pull-right" (click)="lgModal.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-    </div>
-  </div>
-</div>
-<ng-template #saleTemplate>
-  <div class="sale-modal modal-body text-center">
-    <p>{{saleData.message}}</p>
-    <button type="button" class="btn btn-default" (click)="confirm()" >Yes</button>
-    <button type="button" class="btn btn-primary" (click)="decline()" >No</button>
-  </div>
-</ng-template>
-<!--<template #saleTemplate>-->
-  <!--<div class="sale-modal">-->
-    <!--<div class="modal-header">-->
-      <!--<h4 class="modal-title pull-left">-->
-        <!--<span *ngIf="saleData.type == 1">上架</span>-->
-        <!--<span *ngIf="saleData.type == 0">下架</span>-->
-      <!--</h4>-->
-      <!--<button type="button" class="close pull-right" aria-label="Close" (click)="saleModalref.hide()">-->
-        <!--<span aria-hidden="true">&times;</span>-->
-      <!--</button>-->
-    <!--</div>-->
-    <!--<div class="modal-body">-->
-      <!--<form (ngSubmit)="onSubmit()" #deliverForm="ngForm">-->
-        <!--<p>确定-->
-          <!--<span *ngIf="saleData.type == 1">上架</span>-->
-          <!--<span *ngIf="saleData.type == 0">下架</span>-->
-          <!--该商品？</p>-->
-        <!--<button type="submit" class="btn btn-success" [disabled]="!deliverForm.form.valid">submit</button>-->
-        <!--<button type="submit" class="btn btn-default" (click)="saleModalref.hide()">cancel</button>-->
-      <!--</form>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</template>-->
-
-
-
 
 
 <!--<nav>-->

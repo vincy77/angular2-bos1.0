@@ -10,6 +10,18 @@ export class NavComponent implements OnInit {
   activeMenu = '';
   menu = [
     {
+      id: 5,
+      title: 'CMS',
+      icon: 'glyphicon-th',
+      subMenu: [
+        {
+          id: 11,
+          title: '首页配置',
+          link: '/cms/cmsIndex'
+        }
+      ]
+    },
+    {
       id: 1,
       title: '商品',
       icon: 'glyphicon-th',

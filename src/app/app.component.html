@@ -1,6 +1,6 @@
-<app-header></app-header>
-<div class="app-main">
-  <app-nav></app-nav>
+<app-header *showAuthed="true"></app-header>
+<div class="app-main" [class.single]="isSingle">
+  <app-nav *showAuthed="true"></app-nav>
   <div class="app-content" #appContent>
     <router-outlet></router-outlet>
   </div>
