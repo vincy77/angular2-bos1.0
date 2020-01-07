@@ -1,0 +1,267 @@
+
+<section class="category">
+  <ol class="breadcrumb">
+    <li class="active">商品分类</li>
+    <!--<li><a href="#">Library</a></li>-->
+  </ol>
+  <button class="btn btn-primary fr" style="margin-bottom: 20px;" (click)="sortCategory()">排序</button>
+  <button class="btn btn-primary fr" style="margin-bottom: 20px;" (click)="newCategory(0,categoryNewTemplate)">+新增</button>
+  <!--<div class="c-content-inner">-->
+    <!--<div class="row">-->
+      <!--<div  class="col-md-12">-->
+        <!--<p class="c-line-title">示例</p>-->
+        <!--<div class="navbar navbar-default">-->
+          <!--<div class="navbar-header">-->
+            <!--<a class="navbar-brand" href>Angular2 File Upload</a>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="row">-->
+          <!--<div class="col-md-3">-->
+            <!--<h3>Select files</h3>-->
+            <!--<div ng2FileDrop-->
+                 <!--[ngClass]="{'nv-file-over': hasBaseDropZoneOver}"-->
+                 <!--(fileOver)="fileOverBase($event)"-->
+                 <!--[uploader]="uploader"-->
+                 <!--class="well my-drop-zone">-->
+              <!--Base drop zone-->
+            <!--</div>-->
+            <!--<div ng2FileDrop-->
+                 <!--[ngClass]="{'another-file-over-class': hasAnotherDropZoneOver}"-->
+                 <!--(fileOver)="fileOverAnother($event)"-->
+                 <!--[uploader]="uploader"-->
+                 <!--class="well my-drop-zone">-->
+              <!--Another drop zone-->
+            <!--</div>-->
+            <!--Multiple-->
+            <!--<input type="file" ng2FileSelect [uploader]="uploader" multiple  /><br/>-->
+            <!--Single-->
+            <!--<input type="file" ng2FileSelect [uploader]="uploader" />-->
+          <!--</div>-->
+          <!--<div class="col-md-9" style="margin-bottom: 40px">-->
+            <!--<h3>Upload queue</h3>-->
+            <!--<p>Queue length: {{ uploader?.queue?.length }}</p>-->
+            <!--<table class="table">-->
+              <!--<thead>-->
+              <!--<tr>-->
+                <!--<th width="50%">Name</th>-->
+                <!--<th>Size</th>-->
+                <!--<th>Progress</th>-->
+                <!--<th>Status</th>-->
+                <!--<th>Actions</th>-->
+              <!--</tr>-->
+              <!--</thead>-->
+              <!--<tbody>-->
+              <!--<tr *ngFor="let item of uploader.queue">-->
+                <!--<td><strong>{{ item?.file?.name }}</strong></td>-->
+                <!--<td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>-->
+                <!--<td *ngIf="uploader.isHTML5">-->
+                  <!--<div class="progress" style="margin-bottom: 0;">-->
+                    <!--<div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>-->
+                  <!--</div>-->
+                <!--</td>-->
+                <!--<td class="text-center">-->
+                  <!--<span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>-->
+                  <!--<span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>-->
+                  <!--<span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>-->
+                <!--</td>-->
+                <!--<td nowrap>-->
+                  <!--<button type="button" class="btn btn-success btn-xs"-->
+                          <!--(click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">-->
+                    <!--<span class="glyphicon glyphicon-upload"></span> Upload-->
+                  <!--</button>-->
+                  <!--<button type="button" class="btn btn-warning btn-xs"-->
+                          <!--(click)="item.cancel()" [disabled]="!item.isUploading">-->
+                    <!--<span class="glyphicon glyphicon-ban-circle"></span> Cancel-->
+                  <!--</button>-->
+                  <!--<button type="button" class="btn btn-danger btn-xs"-->
+                          <!--(click)="item.remove()">-->
+                    <!--<span class="glyphicon glyphicon-trash"></span> Remove-->
+                  <!--</button>-->
+                <!--</td>-->
+              <!--</tr>-->
+              <!--</tbody>-->
+            <!--</table>-->
+            <!--<div>-->
+              <!--<div>-->
+                <!--Queue progress:-->
+                <!--<div class="progress" style="">-->
+                  <!--<div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--<button type="button" class="btn btn-success btn-s"-->
+                      <!--(click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">-->
+                <!--<span class="glyphicon glyphicon-upload"></span> Upload all-->
+              <!--</button>-->
+              <!--<button type="button" class="btn btn-warning btn-s"-->
+                      <!--(click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">-->
+                <!--<span class="glyphicon glyphicon-ban-circle"></span> Cancel all-->
+              <!--</button>-->
+              <!--<button type="button" class="btn btn-danger btn-s"-->
+                      <!--(click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">-->
+                <!--<span class="glyphicon glyphicon-trash"></span> Remove all-->
+              <!--</button>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="row">-->
+      <!--<div  class="col-md-12">-->
+        <!--<div class="c-mt15">-->
+          <!--<p class="c-line-title">说明</p>-->
+          <!--第三方组件文档:http://valor-software.com/ng2-file-upload/-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--选择文件默认支持选择单个文件，如需支持文件多选，请在标签中添加multiple属性，即：-->
+  <!--<input type="file" ng2FileSelect [uploader]="uploader" (change)="selectedFileOnChanged($event)" multiple />-->
+  <!--<input type="file" ng2FileSelect [uploader]="uploader" (change)="selectedFileOnChanged($event)" />-->
+
+  <section>
+    <!--<bs-sortable-->
+      <!--[(ngModel)]="categoryShowList"-->
+      <!--itemClass="sortable-item"-->
+      <!--itemActiveClass="sortable-item-active"-->
+      <!--placeholderItem="Drag here"-->
+      <!--placeholderClass="placeholderStyle"-->
+      <!--wrapperClass="sortable-wrapper"-->
+    <!--&gt;</bs-sortable>-->
+    <!--<bs-sortable-->
+      <!--[(ngModel)]="categoryShowList"-->
+      <!--fieldName="categoryName"-->
+      <!--itemClass="sortable-item"-->
+      <!--itemActiveClass="sortable-item-active"-->
+      <!--placeholderItem="Drag here"-->
+      <!--placeholderClass="sortable-item"-->
+      <!--wrapperClass="sortable-wrapper"-->
+    <!--&gt;</bs-sortable>-->
+  </section>
+  <section class="category-content cb">
+    <ul [sortablejs]="categoryShowList" [sortablejsOptions]="sortOptions">
+      <li class="category-list category-head">
+        <div class="category-item category-expend">#</div>
+        <div class="category-item category-img">分类图片</div>
+        <div class="category-item category-name">分类名称</div>
+        <div class="category-item">操作</div>
+      </li>
+      <li class="sort-handle" *ngFor="let item of categoryShowList;let i = index">
+        <section class="category-list" [ngClass]="{'list1': item.isOpen, 'list2': item.isOpen && item.children.length > 0}">
+          <div class="category-item category-expend expend-sub" (click)="item.isOpen = !item.isOpen">
+            <span *ngIf="item.isOpen == false"><i class="iconfont">&#xe7ec;</i></span>
+            <span *ngIf="item.isOpen == true"><i class="iconfont">&#xe7ef;</i></span>
+          </div>
+          <div class="category-item category-img"><img [src]="item.categoryImg"></div>
+          <div class="category-item category-name">{{item.categoryName}}</div>
+          <div class="category-item">
+            <button class="btn btn-success" (click)="editCategory(0,categoryNewTemplate,item)">编辑</button>
+            <button class="btn btn-success" (click)="newCategory(1,categoryNewTemplate,item)">+</button>
+            <button class="btn btn-warning" (click)="deleteCategory(item, categoryShowList, i)">-</button>
+          </div>
+        </section>
+        <ul class="sort-handle2" *ngIf="item.isOpen && item.children.length > 0" [sortablejs]="item.children">
+          <li *ngFor="let subItem of item.children;let i = index">
+            <section class="category-list">
+              <div class="category-item category-expend"></div>
+              <div class="category-item category-img expend-sub" (click)="subItem.isOpen = !subItem.isOpen">
+                <span *ngIf="subItem.isOpen == false"><i class="iconfont">&#xe7ec;</i></span>
+                <span *ngIf="subItem.isOpen == true"><i class="iconfont">&#xe7ef;</i></span>
+              </div>
+              <div class="category-item category-name">{{subItem.categoryName}}</div>
+              <div class="category-item">
+                <button class="btn btn-success" (click)="editCategory(1,categoryNewTemplate,subItem)">编辑</button>
+                <button class="btn btn-success" (click)="newCategory(2,categoryNewTemplate,subItem)">+</button>
+                <button class="btn btn-warning" (click)="deleteCategory(subItem, item.children, i)">-</button>
+              </div>
+            </section>
+            <ul class="sort-handle3" *ngIf="subItem.isOpen && subItem.children.length > 0" [sortablejs]="subItem.children">
+              <li *ngFor="let sub of subItem.children;let i = index">
+                <section class="category-list">
+                  <div class="category-item category-expend"></div>
+                  <div class="category-item category-img"></div>
+                  <div class="category-item category-name">{{sub.categoryName}}</div>
+                  <div class="category-item">
+                    <button class="btn btn-success" (click)="editCategory(2,categoryNewTemplate,sub)">编辑</button>
+                    <button class="btn btn-warning" (click)="deleteCategory(sub, subItem.children, i)">-</button>
+                  </div>
+                </section>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </section>
+</section>
+<ng-template #categoryNewTemplate>
+  <div class="view-address-modal">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">新增分类</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="newCategoryModalref.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="onSubmit(categoryForm)" #categoryForm="ngForm" class="main">
+        <div class="form-group">
+          <label for="categoryName">分类名称</label>
+          <input type="text" class="form-control" id="categoryName"
+                 required placeholder="分类名称"
+                 [(ngModel)]="categoryData.categoryName" name="categoryName"
+                 #categoryName="ngModel">
+          <div [hidden]="categoryName.valid || categoryName.pristine"
+               class="alert alert-danger">
+            分类名称必填
+          </div>
+        </div>
+        <div class="form-group" *ngIf="node == 1">
+          <label for="categoryFlag">分类标识</label>
+          <!--<select class="form-control"  id="categoryFlag"-->
+                  <!--required-->
+                  <!--[(ngModel)]="categoryData.categoryFlag" name="categoryFlag" #categoryFlag="ngModel">-->
+            <!--<option *ngFor="let flag of categoryFlag" [value]="flag.key">{{flag.value}}</option>-->
+          <!--</select>-->
+          <input type="text" class="form-control" id="categoryFlag"
+                 placeholder="分类标识"
+                 [(ngModel)]="categoryData.categoryFlag" name="categoryFlag"
+                 #categoryFlag="ngModel">
+          <div [hidden]="categoryFlag.valid || categoryFlag.pristine"
+               class="alert alert-danger">
+            分类标识
+          </div>
+        </div>
+        <div class="form-group" *ngIf="node == 0">
+          <label for="categoryImg">分类图片</label>
+          <input id="categoryImg" name="categoryImg" type="file"
+                 ng2FileSelect [uploader]="uploader.categoryImg"
+                 (change)="selectedFileOnChanged(index, $event, 'categoryImg')"/>
+          <div *ngIf="categoryData.categoryImg">
+            <img src="{{categoryData.categoryImg}}" style="height: 50px;width: 50px;">
+          </div>
+          <!--<button type="button" class="btn" (click)="uploadImg('categoryImg')">upload</button>-->
+          <!--<div *ngIf="singleSetectedImgUrl">-->
+            <!--<img src="{{singleSetectedImgUrl}}" style="height: 50px;width: 50px;">-->
+          <!--</div>-->
+
+          <!--<label for="categoryImg2">分类图片2</label>-->
+          <!--<input id="categoryImg2" name="categoryImg2" type="file"-->
+                 <!--ng2FileSelect [uploader]="uploader.categoryImg2" multiple-->
+                 <!--(change)="selectedFileOnChanged(index, $event, 'categoryImg2')"/>-->
+          <!--<div *ngFor="let img of multipleSetectedImgUrl">-->
+            <!--<img src="{{img}}" style="height: 50px;width: 50px;">-->
+          <!--</div>-->
+          <!--<button type="button" class="btn" (click)="uploadImg('categoryImg2')">upload</button>-->
+          <!--<input type="text" class="form-control" id="categoryImg"-->
+                 <!--required placeholder="分类名称"-->
+                 <!--[(ngModel)]="categoryData.categoryImg" name="categoryImg"-->
+                 <!--#categoryImg="ngModel">-->
+          <!--<div [hidden]="categoryImg.valid || categoryImg.pristine"-->
+               <!--class="alert alert-danger">-->
+            <!--分类图片必填-->
+          <!--</div>-->
+        </div>
+        <button type="submit" [disabled]="!categoryForm.form.valid" class="btn btn-success">提交</button>
+      </form>
+    </div>
+  </div>
+</ng-template>

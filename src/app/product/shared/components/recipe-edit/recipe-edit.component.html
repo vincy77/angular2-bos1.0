@@ -1,0 +1,135 @@
+<!--创建菜谱弹窗-->
+<div class="recipe-modal">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">创建菜谱</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="recipeModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form (ngSubmit)="recipeSubmit(recipeForm)" #recipeForm="ngForm" class="form-default">
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="title">菜谱标题</label>
+        <input type="text" class="form-control" id="title" placeholder="菜谱标题"
+               required
+               [(ngModel)]="recipeData.title" name="title"
+               #title="ngModel">
+        <div [hidden]="title.valid || title.pristine"
+             class="alert alert-danger">
+          菜谱标题必填
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="description">菜谱描述</label>
+        <input type="text" class="form-control" id="description" placeholder="菜谱描述"
+               [(ngModel)]="recipeData.description" name="description"
+               #description="ngModel">
+      </div>
+      <div class="form-group">
+        <label for="author">菜谱作者</label>
+        <input type="text" class="form-control" id="author" placeholder="菜谱作者"
+               [(ngModel)]="recipeData.author" name="author"
+               #author="ngModel">
+        <!--<div [hidden]="author.valid || author.pristine"-->
+        <!--class="alert alert-danger">-->
+        <!--菜谱作者必填-->
+        <!--</div>-->
+      </div>
+      <div class="form-group">
+        <label for="difficultyLevel">难度等级</label>
+        <input type="text" class="form-control" id="difficultyLevel" placeholder="难度等级"
+               [(ngModel)]="recipeData.difficultyLevel" name="difficultyLevel"
+               #difficultyLevel="ngModel">
+      </div>
+      <div class="form-group">
+        <label for="cookTime">制作时间</label>
+        <input type="text" class="form-control" id="cookTime" placeholder="制作时间"
+               [(ngModel)]="recipeData.cookTime" name="cookTime"
+               #cookTime="ngModel">
+      </div>
+      <div class="form-group">
+        <label>材料准备</label>
+        <a class="btn btn-info" (click)="selectIngredients(ingredientsTemplate)">选择材料</a>
+        <!--<ul class="ingredient-list">-->
+        <!--<li class="f-thide" *ngFor="let item of ingredients;let i = index;">-->
+        <!--{{item.title}}-->
+        <!--</li>-->
+        <!--</ul>-->
+      </div>
+      <div class="form-group" *ngIf="ingredients.length > 0">
+        <label>已选材料</label>
+        <ul class="ingredient-list">
+          <li class="f-thide" *ngFor="let item of ingredients;let i = index;">
+            {{item.title}}
+          </li>
+        </ul>
+      </div>
+      <div class="form-group">
+        <label>制作步骤</label>
+        <a class="btn btn-info" (click)="addStep()">添加步骤</a>
+        <ul class="step-content">
+          <li *ngFor="let item of recipeData.cookStep; let i = index">
+            <p class="step-index">步骤{{i+1}}:</p>
+            <textarea type="text" class="form-control" placeholder="步骤描述"
+                      [(ngModel)]="item.desc" name="desc{{i}}"
+                      #desc="ngModel"></textarea>
+            <div class="upload-button">
+              <img src="{{item.stepImg}}">
+              <input id="stepImg" name="stepImg" type="file"
+                     ng2FileSelect [uploader]="uploader.stepImg"
+                     (change)="selectedFileOnChanged('stepImg', $event, i)"/>
+            </div>
+            <a (click)="deleteStep(i, item)">删除</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a class="btn btn-default" (click)="recipeModalRef.hide()">取消</a>
+      <button type="submit" [disabled]="!recipeForm.form.valid" class="btn btn-success">提交</button>
+    </div>
+  </form>
+</div>
+<!--选择材料弹窗-->
+<ng-template #ingredientsTemplate>
+  <div class="recipe-modal">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">选择材料</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="ingredientsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <input type="text" placeholder="请输入商品名称"
+             [(ngModel)]="searchValue">
+      <button class="btn btn-info" (click)="searchProduct()">搜索</button>
+      <div class="product-list">
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th>商品名</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of productList;let i = index">
+            <td class="title">{{item.title}}</td>
+            <td>
+              <i class="iconfont add-icon" *ngIf="ingredientIds.indexOf(item.productId) == -1" (click)="addIngredient(item)">&#xe781;</i>
+              <i class="iconfont remove-icon" *ngIf="ingredientIds.indexOf(item.productId) > -1" (click)="removeIngredient(item)">&#xe780;</i>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <pagination [totalItems]="bigTotalItems" [(ngModel)]="bigCurrentPage"
+                  [maxSize]="5" class="pagination3 pagination-sm"
+                  [boundaryLinks]="true"
+                  (pageChanged)="pageChanged($event)"></pagination>
+    </div>
+    <div class="modal-footer">
+      <a class="btn btn-default" (click)="ingredientsModalRef.hide()">取消</a>
+      <a class="btn btn-success" (click)="confirmIngredients()">提交</a>
+    </div>
+  </div>
+</ng-template>

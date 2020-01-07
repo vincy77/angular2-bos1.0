@@ -25,12 +25,12 @@
           font-weight: 400;
         }
         .form-control{
-          width: calc(~'100% - 180px');
+          width: calc(100% - 180px);
           display: inline-block;
           height: 40px;
         }
         .btn-group{
-          width: calc(~'100% - 180px');
+          width: calc(100% - 180px);
           cursor: pointer;
           input{
             width: 100%;
@@ -77,9 +77,9 @@
           }
         }
         .form-group-url{
-          width: calc(~'100% - 320px');
+          width: calc(100% - 320px);
           input{
-            width: calc(~'100% - 100px');
+            width: calc(100% - 100px);
           }
         }
       }

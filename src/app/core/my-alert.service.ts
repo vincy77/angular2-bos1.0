@@ -1,16 +1,20 @@
 import {
   Component, Injectable, OnInit, ViewChild, ViewContainerRef, ComponentFactory,
-  ComponentRef, ComponentFactoryResolver, OnDestroy, Input, Output
+  ComponentRef, ComponentFactoryResolver, OnDestroy, Input, Output, TemplateRef
 } from '@angular/core';
+//import { Resolve } from '@angular/'
 import { MyAlertComponent } from '../core/my-alert/my-alert.component';
 
 
 @Injectable()
 export class MyAlertService {
   componentRef: ComponentRef<MyAlertComponent>;
-  @ViewChild('', { read: ViewContainerRef }) container: ViewContainerRef;
+  @ViewChild('', { read: ViewContainerRef })
+  container: ViewContainerRef;
   constructor(
-    private resolver: ComponentFactoryResolver
+    private resolver: ComponentFactoryResolver,
+    //private templateRef:TemplateRef<any>,
+    //private viewContainer:ViewContainerRef
   ) {}
   template;
   // 在appComponent中调用该方法初始化 template模版（是否有别的方法，该服务中无法获取组件中设置的模版变量）
@@ -35,6 +39,7 @@ export class MyAlertService {
   // 确认框
   confirmDialog(message: string, fun) {
     this.createComponent(message, 'confirm');
+    console.log(this.componentRef)
     console.log(this.componentRef.instance.outputConfirm);
     this.componentRef.instance.outputConfirm.subscribe(
       (msg: string) => {

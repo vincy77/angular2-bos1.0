@@ -2,10 +2,25 @@
 <div class="cms-banner">
   <div class="form-group form-group-img">
     <label>推送图片</label>
+
+    <!--<div class="upload-main">-->
+      <!--<div class="img-list" id="bannerImgs">-->
+        <!--<div class="upload-button img-item" *ngFor="let img of productData.bannerImg;let i = index;">-->
+          <!--<img src="{{img}}">-->
+          <!--<p class="delete-img" *ngIf="img" (click)="deleteImg('bannerImg', i)">删除</p>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div class="upload-button">-->
+        <!--<input id="bannerImg" name="bannerImg" type="file" multiple-->
+               <!--ng2FileSelect [uploader]="uploader.bannerImg"-->
+               <!--(change)="selectedFileOnChanged(index, $event, 'bannerImg')"/>-->
+      <!--</div>-->
+    <!--</div>-->
+
     <input type="text" class="form-control" required
-           [(ngModel)]="data.imgUrl" name="imgUrl{{index}}"
-           #imgUrl="ngModel">
-    <div [hidden]="imgUrl.valid || imgUrl.pristine"
+           [(ngModel)]="data.bannerImg" name="bannerImg{{index}}"
+           #bannerImg="ngModel">
+    <div [hidden]="bannerImg.valid || bannerImg.pristine"
          class="alert alert-danger">
       商品图片必填
     </div>
@@ -13,9 +28,9 @@
   <div class="form-group form-group-url">
     <label>推送链接</label>
     <input type="text" class="form-control" placeholder="商品价格"
-           required [(ngModel)]="data.actUrl" name="actUrl{{index}}"
-           #actUrl="ngModel">
-    <div [hidden]="actUrl.valid || actUrl.pristine"
+           required [(ngModel)]="data.bannerLink" name="bannerLink{{index}}"
+           #bannerLink="ngModel">
+    <div [hidden]="bannerLink.valid || bannerLink.pristine"
          class="alert alert-danger">
       商品价格必填
     </div>
@@ -26,7 +41,7 @@
         <!--<div class="form-group form-group-img">-->
           <!--<label>推送图片</label>-->
           <!--<input type="text" class="form-control" required-->
-                 <!--[(ngModel)]="mainAct.imgUrl" name="imgUrl{{i}}"-->
+                 <!--[(ngModel)]="mainAct.bannerImg" name="bannerImg{{i}}"-->
                  <!--#tempImg="ngModel">-->
           <!--<div [hidden]="tempImg.valid || tempImg.pristine"-->
                <!--class="alert alert-danger">-->
@@ -36,7 +51,7 @@
         <!--<div class="form-group form-group-url">-->
           <!--<label>推送链接</label>-->
           <!--<input type="text" class="form-control" placeholder="商品价格"-->
-                 <!--required [(ngModel)]="mainAct.actUrl" name="actUrl{{i}}"-->
+                 <!--required [(ngModel)]="mainAct.bannerLink" name="bannerLink{{i}}"-->
                  <!--#tempUrl="ngModel">-->
           <!--<div [hidden]="tempUrl.valid || tempUrl.pristine"-->
                <!--class="alert alert-danger">-->
@@ -50,7 +65,7 @@
   <!--<div class="form-group form-group-img">-->
     <!--<label >Banner图片{{tempImg.valid}}</label>-->
     <!--<input type="text" class="form-control" required-->
-           <!--[(ngModel)]="data.img" name="imgUrl{{index}}"-->
+           <!--[(ngModel)]="data.img" name="bannerImg{{index}}"-->
            <!--#tempImg="ngModel">-->
     <!--<div [hidden]="tempImg.valid || tempImg.pristine"-->
          <!--class="alert alert-danger">-->
@@ -71,9 +86,9 @@
 <!--<div class="form-group form-group-img">-->
   <!--<label>推送图片</label>-->
   <!--<input type="text" class="form-control"-->
-         <!--[(ngModel)]="module.bannerImg" name="imgUrl{{i}}"-->
-         <!--#imgUrl="ngModel">-->
-  <!--<div [hidden]="imgUrl.valid || imgUrl.pristine"-->
+         <!--[(ngModel)]="module.bannerImg" name="bannerImg{{i}}"-->
+         <!--#bannerImg="ngModel">-->
+  <!--<div [hidden]="bannerImg.valid || bannerImg.pristine"-->
        <!--class="alert alert-danger">-->
     <!--商品图片必填-->
   <!--</div>-->
@@ -81,9 +96,9 @@
 <!--<div class="form-group form-group-url">-->
   <!--<label>推送链接</label>-->
   <!--<input type="text" class="form-control" placeholder="推送链接"-->
-         <!--required [(ngModel)]="module.bannerUrl" name="actUrl{{i}}"-->
-         <!--#actUrl="ngModel">-->
-  <!--<div [hidden]="actUrl.valid || actUrl.pristine"-->
+         <!--required [(ngModel)]="module.bannerUrl" name="bannerLink{{i}}"-->
+         <!--#bannerLink="ngModel">-->
+  <!--<div [hidden]="bannerLink.valid || bannerLink.pristine"-->
        <!--class="alert alert-danger">-->
     <!--推送链接必填-->
   <!--</div>-->
@@ -145,8 +160,8 @@
                   <!--<label>商品链接</label>-->
                   <!--<input type="text" class="form-control" placeholder="商品链接"-->
                          <!--required [(ngModel)]="pro.productUrl" name="proUrl{{i}}"-->
-                         <!--#actUrl="ngModel">-->
-                  <!--<div [hidden]="actUrl.valid || actUrl.pristine"-->
+                         <!--#bannerLink="ngModel">-->
+                  <!--<div [hidden]="bannerLink.valid || bannerLink.pristine"-->
                        <!--class="alert alert-danger">-->
                     <!--商品链接必填-->
                   <!--</div>-->

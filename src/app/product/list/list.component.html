@@ -3,61 +3,114 @@
     <li class="active">商品列表</li>
     <!--<li><a href="#">Library</a></li>-->
   </ol>
-  <ul class="nav nav-pills">
-    <li role="presentation" *ngFor="let item of nav.options"
+
+  <ul class="nav nav-pills fl">
+    <li class="nav-item" role="presentation" *ngFor="let item of nav.options"
         [class.active]="item.key === nav.current.key"
         (click)="navChange(item)">
-      <a href="javascript:">{{item.value}}</a>
+      <a class="nav-link" [class.active]="item.key === nav.current.key" href="javascript:">{{item.value}}</a>
     </li>
   </ul>
-  <p *Test="condition" author="semlinker">directive</p>
-  <alert type="success">
-    <strong>Well done!</strong> You successfully read this important alert message.
-  </alert>
-  <button (click)="myAlert()">alert</button>
-  <button (click)="myAlert2()">alert2</button>
-  <section class="main content">
+  <a class="btn btn-success fr" [routerLink]="['/product/productAdd']">新增商品</a>
+
+  <div class="batch cb">
+    <button type="button" class="btn btn-warning" *ngIf="!btnDisabled" (click)="btnDisabled = !btnDisabled">批量操作</button>
+    <button type="button" class="btn btn-warning" *ngIf="btnDisabled" (click)="btnDisabled = !btnDisabled">取消批量</button>
+
+    <div class="btn-group">
+      <button class="btn btn-info" [disabled]="!btnDisabled" (click)="batch(1)">批量删除</button>
+      <button class="btn btn-info" [disabled]="!(btnDisabled && batchType == 1)" (click)="deleteProduct()">确认删除</button>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-info" [disabled]="!btnDisabled" (click)="batch(2)">批量上架</button>
+      <button class="btn btn-info" [disabled]="!(btnDisabled && batchType == 2)" (click)="onSale()">确认上架</button>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-info" [disabled]="!btnDisabled" (click)="batch(3)">批量下架</button>
+      <button class="btn btn-info" [disabled]="!(btnDisabled && batchType == 3)" (click)="inStock()">确认下架</button>
+    </div>
+  </div>
+  <section class="content cb">
     <div class="table-list">
-      <table class="table table-bordered table-hover">
-        <thead>
-          <tr>
-            <!--<th>订单编号</th>-->
-            <th colspan="2">商品详情</th>
-            <th>分类</th>
-            <th>价格</th>
-            <th>操作</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-        <tbody *ngFor="let product of productList">
-          <tr>
-            <td colspan="2" width="30%">
+      <div class="list-title">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th width="5%">
+                <input type="checkbox" name="checkRobot2" [disabled]="!btnDisabled"
+                       [checked]="!isCheckedAll()"
+                (click)="checkedAllbox($event)">
+              </th>
+              <th colspan="2" width="45%">商品详情</th>
+              <!--<th width="15%">分类</th>-->
+              <th width="15%">价格</th>
+              <th width="35%">操作</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="list-item">
+        <table class="table table-bordered table-hover">
+          <tbody>
+          <tr *ngFor="let product of productList">
+            <td width="5%">
+              <!--[(ngModel)]="product.checked"-->
+              <input type="checkbox" name="checkRobot"
+                     [checked]="isChecked(product.productId)"
+                     (click)="checkedbox(product, $event)"
+                     [disabled]="!(btnDisabled && ((product.status == 'ONSALE' && batchType == 3) || (product.status == 'INSTOCK' && (batchType == 1 || batchType == 2))))">
+            </td>
+            <td colspan="2" width="45%">
               <div class="product-detail">
-                <img src="" style="height: 50px;width: 50px">
-                <span>{{product.productTitle}}</span>
+                <img class="fl" [src]="product.productImg[0]">
+                <a class="title f-thide" [routerLink]="['/product/productDetail', product.productId]">{{product.title}}</a>
+                <p class="sub-title f-thide">{{product.subTitle}}</p>
               </div>
             </td>
-            <td width="10%">
-              <span>{{product.proCategory | productCategory}}</span>
-            </td>
-            <td width="10%">{{product.productPrice}}</td>
-            <td width="10%">
-              <a class="sale-btn" (click)="onSale(product, 1)">上架</a>
-              <a class="sale-btn" (click)="onSale(product, 0)">下架</a>
+            <!--<td width="15%">-->
+              <!--<span>{{product.categoryName}}</span>-->
+            <!--</td>-->
+            <td width="15%">¥ {{product.price}}</td>
+            <td width="35%">
+              <a class="sale-btn" (click)="editProCategory(proCategoryTemplate,product)">设置分类</a>
+              <a class="sale-btn" *ngIf="product.status == 'INSTOCK'" (click)="onSale(product)">上架</a>
+              <a class="sale-btn" *ngIf="product.status == 'ONSALE'" (click)="inStock(product)">下架</a>
+              <a class="sale-btn" [routerLink]="['/product/productEdit']" [queryParams]="{productId: product.productId}">编辑</a>
+              <a class="sale-btn" *ngIf="product.status == 'INSTOCK'" (click)="deleteProduct(product)">删除</a>
             </td>
           </tr>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <div class="col-md-12 pagination">
+    <div class="col-md-12 pagination2">
       <pagination [totalItems]="bigTotalItems" [(ngModel)]="bigCurrentPage"
-                  [maxSize]="maxSize" class="pagination-sm"
-                  [boundaryLinks]="true"></pagination>
+                  [maxSize]="maxSize" class="pagination3 pagination-sm"
+                  [boundaryLinks]="true"
+                  (pageChanged)="pageChanged($event)"></pagination>
     </div>
   </section>
 </div>
+<ng-template #proCategoryTemplate>
+  <div class="pro-category-modal">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">商品所属分类</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="proCategoryModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <app-multiple-select [(option)]="proCategory"
+                           [name]="'categoryName'" [list]="categoryShowList"
+                           [multiple]="true"></app-multiple-select>
 
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-default" (click)="proCategoryModalRef.hide()">取消</button>
+      <button class="btn btn-info" (click)="changeProCategory()">保存</button>
+    </div>
+  </div>
+</ng-template>
 
 <!--<nav>-->
   <!--<a routerLink="/trade/tradeDetail" class="navbar">detail</a>-->

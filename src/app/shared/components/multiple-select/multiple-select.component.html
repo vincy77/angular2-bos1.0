@@ -1,0 +1,9 @@
+<div class="btn-group" dropdown [autoClose]="false" container="body" #dropdown="bs-dropdown">
+  <input id="button-nested2" dropdownToggle type="text" class="dropdown-show btn btn-primary dropdown-toggle show-selected"
+         readonly="readonly" aria-controls="dropdown-nested" [placeholder]="selectedData" [value]="selectedData" [name]="name"
+  (click)="openAndClose(dropdown)" >
+  <app-multiple-tree class="app-tree" #ccc (active)="activeEvent($event)" [list]="list"
+                     [selectedList]="selectedList"
+                     [multiple]="multiple" [name]="name"></app-multiple-tree>
+  <!--(selectedItem)="selectedItemEvent($event)"-->
+</div>

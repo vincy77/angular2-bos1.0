@@ -2,94 +2,92 @@
 <div class="cms-index">
   <ul class="new-module">
     <li *ngFor="let module of newModule">
-      <button class="btn btn-primary" (click)="addModuleBtn(module.key)">{{module.value}}</button>
+      <button class="btn btn-primary fl" (click)="addModuleBtn(module.key)">{{module.value}}</button>
     </li>
   </ul>
-  <section class="cms-item">
-    <ol class="breadcrumb fl">
-      <li class="active">CMS配置</li>
-    </ol>
-    <form [formGroup]="user" (ngSubmit)="onSubmit(user)" class="main cb">
-      <div class="form-group">
-        <label>
-          <span>电子邮件地址</span>
-          <input type="text" formControlName="email" placeholder="请输入您的 email 地址">
-        </label>
-        <div *ngIf="user.get('email').hasError('required') && user.get('email').touched" class="error">
-          email 是必填项
-        </div>
-        <div *ngIf="user.get('email').hasError('pattern') && user.get('email').touched" class="error">
-          email 格式不正确
-        </div>
-      </div>
-      <div class="form-group">
-        <label>
-          <span>密码</span>
-          <input type="password" formControlName="password" placeholder="请输入您的密码">
-        </label>
-        <div *ngIf="user.get('password').hasError('required') && user.get('password').touched" class="error">
-          密码是必填项
-        </div>
-      </div>
-      <div class="form-group">
-        <label>
-          <span>确认密码</span>
-          <input type="password" formControlName="repeat" placeholder="请再次输入密码">
-        </label>
-        <div *ngIf="user.get('repeat').hasError('required') && user.get('repeat').touched" class="error">
-          确认密码是必填项
-        </div>
-        <div *ngIf="user.hasError('validateEqual') && user.get('repeat').touched" class="error">
-          确认密码和密码不一致
-        </div>
-      </div>
-
-      <!--<div formGroupName="address">-->
-        <!--<label>-->
-          <!--<span>省份</span>-->
-          <!--<select formControlName="province">-->
-            <!--<option value="">请选择省份</option>-->
-            <!--<option [value]="province" *ngFor="let province of provinces">{{province}}</option>-->
-          <!--</select>-->
-        <!--</label>-->
-        <!--<label>-->
-          <!--<span>城市</span>-->
-          <!--<select formControlName="city">-->
-            <!--<option value="">请选择城市</option>-->
-            <!--<option [value]="city" *ngFor="let city of (cities$ | async)">{{city}}</option>-->
-          <!--</select>-->
-        <!--</label>-->
-        <!--<label>-->
-          <!--<span>区县</span>-->
-          <!--<select formControlName="area">-->
-            <!--<option value="">请选择区县</option>-->
-            <!--<option [value]="area" *ngFor="let area of (areas$ | async)">{{area}}</option>-->
-          <!--</select>-->
-        <!--</label>-->
-        <!--<label>-->
-          <!--<span>地址</span>-->
-          <!--<input type="text" formControlName="addr">-->
-        <!--</label>-->
-      <!--</div>-->
-      <button type="submit" [disabled]="user.invalid">注册</button>
-    </form>
-  </section>
-
+  <!--Banner-->
   <section class="cms-item">
     <ol class="breadcrumb fl">
       <li class="active">CMS配置-首页Banner</li>
     </ol>
-
     <button class="btn btn-success fr" (click)="add(indexData.indexBanner)">+新增Banner</button>
-    <form  novalidate (ngSubmit)="onSubmit(indexBannerForm)" #indexBannerForm="ngForm" class="main cb">
+    <form  novalidate (ngSubmit)="onSubmit('indexBanner')" #indexBannerForm="ngForm" class="main cb">
       <ul class="img-form-group">
         <li *ngFor="let indexBanner of indexData.indexBanner let i = index">
-          <cms-banner [data]="indexBanner" [index]="i" [form]="indexBannerForm"></cms-banner>
+          <div class="form-group form-group-img">
+            <label>推送图片</label>
+            <input type="text" class="form-control" required
+                   [(ngModel)]="indexBanner.bannerImg" name="bannerImg{{index}}"
+                   #bannerImg="ngModel">
+            <div [hidden]="bannerImg.valid || bannerImg.pristine"
+                 class="alert alert-danger">
+              商品图片必填
+            </div>
+          </div>
+          <div class="form-group form-group-url">
+            <label>推送链接</label>
+            <input type="text" class="form-control" placeholder="商品价格"
+                   required [(ngModel)]="indexBanner.bannerLink" name="bannerLink{{index}}"
+                   #bannerLink="ngModel">
+            <div [hidden]="bannerLink.valid || bannerLink.pristine"
+                 class="alert alert-danger">
+              商品价格必填
+            </div>
+          </div>
+          <!--<cms-banner [data]="indexBanner" [index]="i" [form]="indexBannerForm"></cms-banner>-->
           <!--提交的时候，form.value并没有取到值，而且子组件里面的temp.valid取出来的值是false，但是外面form.valid却是true-->
           <button type="button" class="btn btn-warning" (click)="delete(i, 'indexBanner')">删除</button>
         </li>
       </ul>
       <button type="submit" [disabled]="!indexBannerForm.form.valid" class="btn btn-success">保存</button>
+    </form>
+  </section>
+
+  <section class="cms-item">
+    <ol class="breadcrumb fl">
+      <li class="active">CMS配置-首页分类</li>
+    </ol>
+    <form (ngSubmit)="onSubmit(categoryForm)" #categoryForm="ngForm" class="main cb">
+      <ul class="img-form-group">
+        <li *ngFor="let mainAct of indexData.categoryModule let i = index">
+
+        </li>
+      </ul>
+      <button type="submit" [disabled]="!categoryForm.form.valid" class="btn btn-success">保存</button>
+    </form>
+  </section>
+
+  <section class="cms-item">
+    <ol class="breadcrumb fl">
+      <li class="active">CMS配置-首页大嘴头条</li>
+    </ol>
+    <form (ngSubmit)="onSubmit(headlineForm)" #headlineForm="ngForm" class="main cb">
+      <ul class="img-form-group">
+        <li *ngFor="let headline of indexData.headlineModule let i = index">
+          <div>选择之前已创建的文章</div>
+          <div class="form-group form-group-url">
+            <label>标题</label>
+            <input type="text" class="form-control" placeholder="标题"
+                   required [(ngModel)]="headline.title" name="title{{i}}"
+                   #headline="ngModel">
+            <div [hidden]="headline.valid || headline.pristine"
+                 class="alert alert-danger">
+              商品价格必填
+            </div>
+          </div>
+          <div class="form-group form-group-url">
+            <label>描述</label>
+            <input type="text" class="form-control" placeholder="描述"
+                   required [(ngModel)]="headline.subTitle" name="subTitle{{i}}"
+                   #subTitle="ngModel">
+            <div [hidden]="subTitle.valid || subTitle.pristine"
+                 class="alert alert-danger">
+              商品价格必填
+            </div>
+          </div>
+        </li>
+      </ul>
+      <button type="submit" [disabled]="!headlineForm.form.valid" class="btn btn-success">保存</button>
     </form>
   </section>
 
@@ -122,7 +120,7 @@
           </div>
         </li>
       </ul>
-      <button type="submit" [disabled]="!mainActForm.form.valid" class="btn btn-success">提交</button>
+      <button type="submit" [disabled]="!mainActForm.form.valid" class="btn btn-success">保存</button>
     </form>
   </section>
 
@@ -155,9 +153,10 @@
 
           </li>
         </ul>
-        <button type="submit" [disabled]="!mainActForm.form.valid" class="btn btn-success">提交</button>
+        <button type="submit" [disabled]="!mainActForm.form.valid" class="btn btn-success">保存</button>
       </form>
     </section>
   </div>
+  <button type="submit" class="btn btn-success" (click)="confirmSubmit">提交</button>
 
 </div>

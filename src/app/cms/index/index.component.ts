@@ -1,26 +1,35 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from "@angular/forms";
 
 import { Product } from '../shared/product';
 import { MyAlertService } from '../../core/my-alert.service';
-import { ProductService } from '../shared/product.service';
+import { CMSService } from '../shared/cms.service';
 
+import { CMSBannerComponent } from '../shared/banner/banner.component';
 
 @Component({
   selector: 'cms-index',
   templateUrl: 'index.component.html',
-  styleUrls: ['index.component.less']
+  styleUrls: ['index.component.scss']
 })
-export class CMSIndexComponent implements OnInit {
+export class CMSIndexComponent implements OnInit, AfterViewInit {
   //除了使用了变量赋值的方式初始化组件，还可以使用构造函数constructor()来声明和初始化属性
+  @ViewChild(CMSBannerComponent)
+  private cmsBanner:CMSBannerComponent;
   user: FormGroup;
   productData = new Product('', '', '', '', 100);
   submitted = false;
   indexData:any = {
-    indexBanner: [{img: '', url: '11'},{img: '', url: '22'}],
+    indexBanner: [{bannerImg: '', bannerLink: '11'},{bannerImg: '', bannerLink: '22'}],
+    categoryModule: [{}, {}],
+    headlineModule: [{}, {}],
+    fancyModule: [{}],
+    saleModule: [{}],
+    bestModule: [{}],
     mainAct: [{},{},{},{}],
     otherModule: [{type: 'hotAct', bannerImg: '', bannerUrl: '', products: [{productUrl: ''}]}]
   };
+
   newModule = [
     {key: 'hotAct', value: '新增当季推送模块'},
     {key: 'hotPro', value: '新增热门商品模块'},
@@ -28,11 +37,11 @@ export class CMSIndexComponent implements OnInit {
     {key: '', value: '新增团购活动模块'}];
 
   constructor(
-    private productService: ProductService,
-    private myAlertService: MyAlertService
+    private cmsService: CMSService,
+    private myAlertService: MyAlertService,
+    private fb: FormBuilder
 
   ) { }
-
 
   selectChange(item) {
     this.productData.proCategory = item.id;
@@ -60,23 +69,35 @@ export class CMSIndexComponent implements OnInit {
       console.log(that.indexData);
     });
   }
-  onSubmit({value, valid}) {
+  // onSubmit({value, valid}) {
+  onSubmit(form) {
     let that = this;
+    console.log(form);
     this.myAlertService.confirmDialog('确认提交吗？', function (e) {
       that.submitted = true;
-      // console.log(productForm);
-      // console.log(productForm.value);
       console.log(that.indexData);
-      console.log(that.productData);
-      console.log(value);
-      //name = name.trim();
-      //if(!name) {return}
-      // that.productService.create(that.productData)
-      //   .then(hero => {
-      //     //this.heros.push(hero);
-      //     //this.selectedHero = null;
-      //     that.myAlertService.successMsg('添加成功！');
-      //   });
+      console.log(that.indexData[form]);
+      let params = {
+        cmsId: '',
+        id: '',
+        banner: that.indexData[form]
+      }
+      that.cmsService.createBanner(params)
+        .subscribe(res => {
+          if(res.success){
+            that.myAlertService.successMsg('添加成功！');
+
+            // if(!that.productData['productId']){
+            //   that.productData = res.data;
+            //   that.myAlertService.successMsg('商品保存成功！');
+            // }else{
+            //   that.myAlertService.successMsg('商品修改成功！');
+            // }
+            // that.activatedRoute.snapshot.paramMap.get('productId') = res.data.productId;
+
+          }
+        });
+
     });
     // that.user.email = ''
   }
@@ -85,24 +106,22 @@ export class CMSIndexComponent implements OnInit {
   }
 
 
+  /**
+   * 最终提交（使用当前为首页内容）
+   * */
+  confirmSubmit() {
+
+  }
 
   ngOnInit() {
-    console.log(this.productService.isLoggedIn);
-    this.productService.login();
-    console.log(this.productService.isLoggedIn);
+    console.log(this.cmsService.isLoggedIn);
+    this.cmsService.login();
+    console.log(this.cmsService.isLoggedIn);
+  }
+  /**
+   * */
+  ngAfterViewInit() {
 
-    // 初始化表单
-    this.user = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.pattern(/([a-zA-Z0-9]+[_|_|.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|_|.]?)*[a-zA-Z0-9]+.[a-zA-Z]{2,4}/)]),
-      password: new FormControl('', [Validators.required]),
-      repeat: new FormControl('', [Validators.required]),
-      // address: new FormGroup({
-      //   province: new FormControl(''),
-      //   city: new FormControl(''),
-      //   area: new FormControl(''),
-      //   addr: new FormControl('')
-      // })
-    });
   }
 
 }

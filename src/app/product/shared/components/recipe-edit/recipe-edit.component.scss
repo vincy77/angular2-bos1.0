@@ -1,0 +1,76 @@
+.recipe-modal{
+  .form-group{
+    margin-bottom: 10px;
+  }
+  label{
+    width: 90px;
+    text-align: right;
+    padding-right: 10px;
+    font-weight: 400;
+  }
+  .form-control{
+    width: calc(100% - 150px);
+    display: inline-block;
+    height: 40px;
+  }
+  .ingredient-list{
+    display: flex;
+    flex-wrap: wrap;
+    margin: -25px 0 0 90px;
+    li{
+      padding: 4px 10px;
+      box-shadow: 3px 3px 10px #aaa;
+      margin: 0 10px 10px 0;
+      box-sizing: border-box;
+      border-radius: 10px;
+      max-width: 150px;
+    }
+  }
+  .step-content{
+    li{
+      display: flex;
+      textarea{
+        width: auto;
+        flex-grow: 2;
+      }
+    }
+  }
+  .step-index{
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  .product-list{
+    height: auto;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    table{
+      margin: 0;
+      text-align: center;
+      .title{
+        text-align: left;
+      }
+      .iconfont{
+        font-size: 30px;
+        color: #42A948;
+      }
+      .remove-icon{
+        color: #f0ad4e;
+      }
+    }
+  }
+  .upload-button{
+    display: inline-block;
+    height: 80px;
+    width: 80px;
+    margin: 0;
+    input{
+      height: 80px;
+      width: 80px;
+    }
+    img{
+      height: 100%;
+      width: 100%;
+    }
+  }
+}

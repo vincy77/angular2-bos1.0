@@ -7,7 +7,7 @@ import {User} from "../user.model";
 @Component({
   selector: 'my-login',
   templateUrl: 'my-login.component.html',
-  styleUrls: ['my-login.component.less']
+  styleUrls: ['my-login.component.scss']
 })
 export class MyLoginComponent {
   model:any = {username:'',password:''};

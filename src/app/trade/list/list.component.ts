@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+// import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+import { BsModalRef } from 'ngx-bootstrap/modal';
+
 
 import { TradeService } from '../shared/trade.service';
 //import { Order } from '../trade';
@@ -9,7 +11,7 @@ import { TradeService } from '../shared/trade.service';
 @Component({
   selector: 'trade-list',
   templateUrl: './list.component.html',
-  styleUrls: ['list.component.less'],
+  styleUrls: ['list.component.scss'],
 // Angular 4.X拥有多级依赖注入系统，在一个注入器的范围内，依赖都是单例的。
 // 它使用冒泡机制，当一个组件申请获得一个依赖时，Angular 先尝试用该组件自己的注入器来满足它。
 // 如果该组件的注入器没有找到对应的提供商，它就把这个申请转给它父组件的注入器来处理。
@@ -100,16 +102,16 @@ export class TradeListComponent implements OnInit {
     private tradeService: TradeService
   ) {}
   getOrder(): void {
-    this.tradeService
-      .getOrder(1)
-      .then(orders => {
-        console.log(orders);
-        return this.order = orders;
-      });
+    // this.tradeService
+    //   .getOrder(1)
+    //   .then(orders => {
+    //     console.log(orders);
+    //     return this.order = orders;
+    //   });
   }
   save(): void {
-    this.tradeService.update(1111)
-      .then(() => this.goBack());
+    // this.tradeService.update(1111)
+    //   .then(() => this.goBack());
   }
   goBack(): void {
 
@@ -117,19 +119,19 @@ export class TradeListComponent implements OnInit {
   add(name: string): void {
     name = name.trim();
     if(!name) {return}
-    this.tradeService.create(name)
-      .then(hero => {
-        this.heros.push(hero);
-        this.selectedHero = null;
-      })
+    // this.tradeService.create(name)
+    //   .then(hero => {
+    //     this.heros.push(hero);
+    //     this.selectedHero = null;
+    //   })
   }
   getOrders(data: any) {
-    this.tradeService
-      .getOrders(data)
-      .then(orders => {
-        console.log(orders);
-        return this.orderList = orders;
-      });
+    // this.tradeService
+    //   .getOrders(data)
+    //   .then(orders => {
+    //     console.log(orders);
+    //     return this.orderList = orders;
+    //   });
   }
 
   onSubmit() {

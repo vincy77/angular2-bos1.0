@@ -4,14 +4,20 @@
     <li class="active">创建商品</li>
     <!--<li><a href="#">Library</a></li>-->
   </ol>
-  <form (ngSubmit)="onSubmit(productForm)" #productForm="ngForm" class="main">
+  <!--<app-multiple-select [(option)]="productData.aaa" (optionChange)="aaa($event)"-->
+                       <!--[name]="'categoryName'" [list]="testList2"-->
+                       <!--[multiple]="true"></app-multiple-select>-->
+<div class="test"></div>
+  <button class="btn btn-warning" (click)="uploadImg()">button</button>
+
+  <form (ngSubmit)="onSubmit(productForm)" #productForm="ngForm" class="main form-default">
     <div class="form-group">
       <!--每个 input 元素都有id属性，label元素的for属性用它来匹配到对应的输入控件。-->
       <!--每个 input 元素都有name属性，Angular 表单用它注册控件。-->
       <label for="title">商品标题</label>
       <input type="text" class="form-control" id="title"
              required placeholder="商品标题"
-             [(ngModel)]="productData.productTitle" name="title"
+             [(ngModel)]="productData.title" name="title"
              #title="ngModel">
       <!--模版引用变量#title可以访问模版中输入框的angular控件，把#title
       赋值为ngModel，是因为ngModel指令的exportAs属性设置成了"ngModel"-->
@@ -25,73 +31,273 @@
     <div class="form-group">
       <label for="subTitle">商品副标题</label>
       <input type="text" class="form-control" id="subTitle" placeholder="商品副标题"
-             [(ngModel)]="productData.productSubTitle" name="subTitle">
+             [(ngModel)]="productData.subTitle" name="subTitle">
     </div>
     <div class="form-group">
-      <label for="imgUrl">商品图片</label>
-      <input type="text" class="form-control" id="imgUrl"
-             [(ngModel)]="productData.imgUrl" name="imgUrl"
-             #imgUrl="ngModel">
-      <div [hidden]="imgUrl.valid || imgUrl.pristine"
-           class="alert alert-danger">
-        商品图片必填
+      <label for="bannerImg">商品banner图片</label>
+      <div class="upload-main">
+        <div class="img-list" id="bannerImgs">
+          <div class="upload-button img-item" *ngFor="let img of productData.bannerImg;let i = index;">
+            <img src="{{img}}">
+            <p class="delete-img" *ngIf="img" (click)="deleteImg('bannerImg', i)">删除</p>
+          </div>
+        </div>
+        <div class="upload-button">
+          <input id="bannerImg" name="bannerImg" type="file" multiple
+                 ng2FileSelect [uploader]="uploader.bannerImg"
+                 (change)="selectedFileOnChanged(index, $event, 'bannerImg')"/>
+        </div>
       </div>
     </div>
     <div class="form-group">
-      <label for="proCategory">商品分类</label>
-      <div class="btn-group" dropdown>
-        <input type="text" dropdownToggle class="form-control" id="proCategory"
-               required
-               [(ngModel)]="productData.proCategory" name="proCategory"
-               #proCategory="ngModel">
-        <span class="caret my-caret"></span>
-        <ul *dropdownMenu class="dropdown-menu" role="menu">
-          <li role="menuitem" *ngFor="let item of proCategorys" (click)="selectChange(item)">
-            <span class="dropdown-item">{{item.text}}</span>
-          </li>
-
-          <!--<li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>-->
-          <!--<li role="menuitem"><a class="dropdown-item" href="#">Another action</a></li>-->
-          <!--<li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>-->
-          <!--<li class="divider dropdown-divider"></li>-->
-          <!--<li role="menuitem"><a class="dropdown-item" href="#">Separated link</a>-->
+      <label for="detailImg">商品详情图片</label>
+      <div class="upload-main">
+        <div class="img-list" id="detailImgs">
+          <div class="upload-button" *ngFor="let img of productData.detailImg">
+            <img src="{{img}}">
+          </div>
+        </div>
+        <div class="upload-button">
+          <input id="detailImg" name="detailImg" type="file" multiple
+                 ng2FileSelect [uploader]="uploader.detailImg"
+                 (change)="selectedFileOnChanged(index, $event, 'detailImg')"/>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>商品分类</label>
+      <!--[(data)]="productData.categoryName"-->
+      <app-multiple-select [(option)]="productData.categoryIds" (optionChange)="aaa($event)"
+                           [name]="'categoryName'" [list]="categoryShowList"
+                           [multiple]="true"></app-multiple-select>
+      <!--<input style="display: none" type="text" class="form-control" id="categoryId" placeholder="商品分类"-->
+             <!--[(ngModel)]="productData.categoryId" name="categoryId" #categoryId="ngModel">-->
+      <!--<div class="btn-group" dropdown [autoClose]="false" container="body" #dropdown="bs-dropdown">-->
+        <!--<input id="button-nested" dropdownToggle type="text" class="form-control dropdown-toggle"-->
+                <!--aria-controls="dropdown-nested" placeholder="{{categoryTitle}}">-->
+        <!--<ul id="dropdown-nested" *dropdownMenu class="dropdown-menu"-->
+            <!--role="menu" aria-labelledby="button-nested" #sss>-->
+          <!--<li role="menuitem" dropdown placement="right" container="body"-->
+              <!--*ngFor="let item of categoryShowList">-->
+            <!--<ng-container  *ngIf="item.children.length <= 0">-->
+              <!--<a dropdownToggle class="dropdown-item">-->
+                <!--<input type="checkbox" name="mutipleSelect">{{item.categoryName}}-->
+              <!--</a>-->
+            <!--</ng-container>-->
+            <!--<ng-container *ngIf="item.children.length > 0">-->
+              <!--<a dropdownToggle class="dropdown-item dropdown-toggle" (click)="selectCategory(dropdown,item)">-->
+                <!--{{item.categoryName}}-->
+              <!--</a>-->
+              <!--<ul *dropdownMenu class="dropdown-menu" role="menu">-->
+                <!--<li role="menuitem" *ngFor="let sub of item.children">-->
+                  <!--<ng-container *ngIf="sub.children.length <= 0">-->
+                    <!--<a class="dropdown-item">-->
+                      <!--<input type="checkbox" name="mutipleSelect">{{sub.categoryName}}-->
+                    <!--</a>-->
+                  <!--</ng-container>-->
+                  <!--<ng-container *ngIf="sub.children.length > 0">-->
+                    <!--<a class="dropdown-item dropdown-toggle" (click)="selectCategory(dropdown,sub,item)">-->
+                      <!--{{sub.categoryName}}-->
+                    <!--</a>-->
+                    <!--<ul *dropdownMenu class="dropdown-menu" role="menu">-->
+                      <!--<li role="menuitem" *ngFor="let last of sub.children">-->
+                        <!--<a class="dropdown-item" (click)="selectCategory(dropdown,last,sub,item)">-->
+                          <!--<input type="checkbox" name="mutipleSelect">{{last.categoryName}}-->
+                        <!--</a>-->
+                      <!--</li>-->
+                    <!--</ul>-->
+                  <!--</ng-container>-->
+                <!--</li>-->
+              <!--</ul>-->
+            <!--</ng-container>-->
           <!--</li>-->
-        </ul>
-      </div>
-      <!--<select class="form-control" id="proCategory" placeholder="商品分类"-->
-              <!--required [(ngModel)]="productData.proCategory" name="proCategory"-->
-              <!--#proCategory="ngModel">-->
-        <!--<option class="select-opt" *ngFor="let item of proCategorys" [value]="item.id">{{item.text}}</option>-->
-      <!--</select>-->
-      <!--<ng-select id="proCategory"-->
-                 <!--[allowClear]="true"-->
-                 <!--[items]="proCategorys"-->
-                 <!--(selected)="selected($event)"-->
-                 <!--[(ngModel)]="productData.proCategory"-->
-                 <!--name="proCategory"-->
-                 <!--#proCategory="ngModel"-->
-                 <!--placeholder="No city selected">-->
-      <!--</ng-select>-->
-      <!--<select [(ngModel)]="productData.proCategory" name="proCategory" id="proCategory" #proCategory="ngModel">-->
-        <!--<option *ngFor="let item of proCategorys" [value]="item.id">{{ item.text }}</option>-->
-      <!--</select>-->
-      <div [hidden]="proCategory.valid || proCategory.pristine"
-           class="alert alert-danger">
-        商品分类必填
-      </div>
+        <!--</ul>-->
+      <!--</div>-->
+      <!--<div [hidden]="categoryId.valid || categoryId.pristine"-->
+           <!--class="alert alert-danger">-->
+        <!--请选择商品分类-->
+      <!--</div>-->
     </div>
     <div class="form-group">
-      <label for="productPrice">商品价格</label>
-      <input type="text" class="form-control" id="productPrice" placeholder="商品价格"
-             required [(ngModel)]="productData.productPrice" name="productPrice"
-             #productPrice="ngModel">
-      <div [hidden]="productPrice.valid || productPrice.pristine"
+      <label for="price">商品价格</label>
+      <input type="text" class="form-control" id="price" placeholder="商品价格"
+             required [(ngModel)]="productData.price" name="price"
+             #price="ngModel">
+      <div [hidden]="price.valid || price.pristine"
            class="alert alert-danger">
         商品价格必填
       </div>
     </div>
-
+    <div class="form-group">
+      <label for="unit">商品单位</label>
+      <!--<select class="form-control" id="unit" required-->
+              <!--[(ngModel)]="productData.unit" name="unit">-->
+        <!--<option class="option" *ngFor="let u of unit" [value]="u.key">-->
+          <!--{{u.name}}-->
+        <!--</option>-->
+      <!--</select>-->
+      <input type="text" class="form-control" id="unit" placeholder="商品单位"
+             required [(ngModel)]="productData.unit" name="unit"
+             #unit="ngModel">
+      <div [hidden]="unit.valid || unit.pristine"
+           class="alert alert-danger">
+        商品单位必填
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="spec">商品规格</label>
+      <input type="text" class="form-control" id="spec" placeholder="商品规格"
+             required [(ngModel)]="productData.spec" name="spec"
+             #spec="ngModel">
+      <div [hidden]="spec.valid || spec.pristine"
+           class="alert alert-danger">
+        商品规格必填
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="recipes">商品菜谱</label>
+      <button type="button" class="btn btn-info" (click)="createRecipe(recipeTemplate)">创建菜谱</button>
+      <input type="text" class="form-control" id="recipes" placeholder="商品规格"
+             [(ngModel)]="productData.recipes" name="recipes"
+             #recipes="ngModel">
+    </div>
   <button type="submit" [disabled]="!productForm.form.valid" class="btn btn-success">提交</button>
 
   </form>
+  <button (click)="goBack()">go back</button>
 </section>
+<!--创建菜谱弹窗-->
+<ng-template #recipeTemplate>
+  <div class="recipe-modal">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">创建菜谱</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="recipeModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <form (ngSubmit)="recipeSubmit(recipeForm)" #recipeForm="ngForm" class="main">
+      <div class="modal-body">
+          <div class="form-group">
+            <label for="name">菜谱标题</label>
+            <input type="text" class="form-control" id="name" placeholder="菜谱标题"
+                   required
+                   [(ngModel)]="recipeData.name" name="name"
+                   #name="ngModel">
+            <div [hidden]="name.valid || name.pristine"
+                 class="alert alert-danger">
+              菜谱标题必填
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="description">菜谱描述</label>
+            <input type="text" class="form-control" id="description" placeholder="菜谱描述"
+                   [(ngModel)]="recipeData.description" name="description"
+                   #description="ngModel">
+          </div>
+          <div class="form-group">
+            <label for="author">菜谱作者</label>
+            <input type="text" class="form-control" id="author" placeholder="菜谱作者"
+                   [(ngModel)]="recipeData.author" name="author"
+                   #author="ngModel">
+            <!--<div [hidden]="author.valid || author.pristine"-->
+                 <!--class="alert alert-danger">-->
+              <!--菜谱作者必填-->
+            <!--</div>-->
+          </div>
+          <div class="form-group">
+            <label for="difficultyLevel">难度等级</label>
+            <input type="text" class="form-control" id="difficultyLevel" placeholder="难度等级"
+                   [(ngModel)]="recipeData.difficultyLevel" name="difficultyLevel"
+                   #difficultyLevel="ngModel">
+          </div>
+          <div class="form-group">
+            <label for="time">制作时间</label>
+            <input type="text" class="form-control" id="time" placeholder="制作时间"
+                   [(ngModel)]="recipeData.time" name="time"
+                   #time="ngModel">
+          </div>
+          <div class="form-group">
+            <label>材料准备</label>
+            <a class="btn btn-info" (click)="selectIngredients(ingredientsTemplate)">选择材料</a>
+            <!--<ul class="ingredient-list">-->
+              <!--<li class="f-thide" *ngFor="let item of ingredientList;let i = index;">-->
+                <!--{{item.title}}-->
+              <!--</li>-->
+            <!--</ul>-->
+          </div>
+          <div class="form-group" *ngIf="ingredientList.length > 0">
+            <label>已选材料</label>
+            <ul class="ingredient-list">
+              <li class="f-thide" *ngFor="let item of ingredientList;let i = index;">
+                {{item.title}}
+              </li>
+            </ul>
+          </div>
+          <div class="form-group">
+            <label>制作步骤</label>
+            <a class="btn btn-info" (click)="addStep()">添加步骤</a>
+            <ul class="step-content">
+              <li *ngFor="let item of step; let i = index">
+                <p class="step-index">步骤{{i+1}}:</p>
+                <textarea type="text" class="form-control" placeholder="步骤描述"
+                          [(ngModel)]="item.desc" name="desc{{i}}"
+                          #desc="ngModel"></textarea>
+                <div class="upload-button">
+                  <img src="{{item.stepImg}}">
+                  <input id="stepImg" name="stepImg" type="file"
+                         ng2FileSelect [uploader]="uploader.stepImg"
+                         (change)="selectedFileOnChanged(i, $event, 'stepImg')"/>
+                </div>
+            </ul>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default" (click)="recipeModalRef.hide()">取消</button>
+        <button type="submit" [disabled]="!recipeForm.form.valid" class="btn btn-success">提交</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+<!--选择材料弹窗-->
+<ng-template #ingredientsTemplate>
+  <div class="recipe-modal">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">选择材料</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="ingredientsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <input type="text" placeholder="请输入商品名称"
+             [(ngModel)]="searchValue">
+      <button class="btn btn-info" (click)="getProducts()">搜索</button>
+      <div class="product-list">
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th>商品名</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of productList;let i = index">
+            <td class="title">{{item.title}}</td>
+            <td>
+              <i class="iconfont add-icon" *ngIf="ingredientIds.indexOf(item.productId) == -1" (click)="addIngredient(item)">&#xe781;</i>
+              <i class="iconfont remove-icon" *ngIf="ingredientIds.indexOf(item.productId) > -1" (click)="removeIngredient(item)">&#xe780;</i>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <pagination [totalItems]="bigTotalItems" [(ngModel)]="bigCurrentPage"
+                  [maxSize]="5" class="pagination3 pagination-sm"
+                  [boundaryLinks]="true"
+                  (pageChanged)="pageChanged($event)"></pagination>
+    </div>
+    <div class="modal-footer">
+      <a class="btn btn-default" (click)="ingredientsModalRef.hide()">取消</a>
+      <a class="btn btn-success" (click)="confirmIngredients()">提交</a>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,39 @@
+<section>
+  <button (click)="editRecipe()">编辑</button>
+  <ul>
+    <li>
+      薇蓶蔿苿
+      薇蓶蔿菋
+      薇蓶蔿蘶
+      <label>菜谱标题</label>
+      <span>{{recipeData.title}}</span>
+    </li>
+    <li>
+      <label>菜谱描述</label>
+      <span>{{recipeData.description}}</span>
+    </li>
+    <li>
+      <label>菜谱作者</label>
+      <span>{{recipeData.author}}</span>
+    </li>
+    <li>
+      <label>难度等级</label>
+      <span>{{recipeData.difficultyLevel}}</span>
+    </li>
+    <li>
+      <label>制作时间</label>
+      <span>{{recipeData.cookTime}}</span>
+    </li>
+    <li>
+      <label>材料</label>
+      <span *ngFor="let pro of product">{{pro.title}}</span>
+    </li>
+    <li>
+      <label>步骤</label>
+      <div *ngFor="let step of recipeData.cookStep">
+        <p>{{step.desc}}</p>
+        <img src="{{step.stepImg}}" />
+      </div>
+    </li>
+  </ul>
+</section>

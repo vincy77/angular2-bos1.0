@@ -9,6 +9,8 @@ import { AppRoutingModule } from '../app-routing.module';
 import { MyAlertService } from './my-alert.service';
 import { MyLoginService } from './my-login.service';
 import { UserService } from './user.service';
+import { TreeService } from './service/tree.service';
+import { UploadFileService } from './service/upload-file.service';
 
 //只加载一次的组件
 import {HeaderComponent} from '../layout/header/header.component';
@@ -35,7 +37,9 @@ import {JwtService} from './jwt.service';
     MyAlertService,
     MyLoginService,
     UserService,
-    JwtService
+    JwtService,
+    TreeService,
+    UploadFileService
   ],
   declarations: [
     HeaderComponent,

@@ -1,7 +1,7 @@
 <div class="my-nav">
   <nav>
     <ul class="menu">
-      <li class="menu-item" *ngFor="let item of menu">
+      <li class="menu-item" *ngFor="let item of menu; let i = index">
         <div class="menu-title" (click)="expandMenu(item.id)">
           <span class="glyphicon title-icon {{item.icon}}"></span>
           {{item.title}}

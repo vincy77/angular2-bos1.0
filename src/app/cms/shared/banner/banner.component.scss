@@ -1,10 +1,10 @@
 .cms-banner{
   display: inline-block;
-  width: calc(~'100% - 60px');;
+  width: calc(100% - 60px);
   .form-group{
     display: inline-block;
     input{
-      width: calc(~'100% - 180px');
+      width: calc(100% - 180px);
       display: inline-block;
       height: 40px;
     }
@@ -22,9 +22,9 @@
     }
   }
   .form-group-url{
-    width: calc(~'100% - 260px');
+    width: calc(100% - 260px);
     input{
-      width: calc(~'100% - 100px');
+      width: calc(100% - 100px);
     }
   }
 }

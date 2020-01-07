@@ -1,0 +1,49 @@
+<div class="cms-list">
+  <ol class="breadcrumb">
+    <li class="active">CMS列表</li>
+    <!--<li><a href="#">Library</a></li>-->
+  </ol>
+  <a class="btn btn-primary fr" (click)="createCMS()">新增CMS</a>
+
+  <section>
+    <div class="table-list">
+      <div class="list-title">
+        <table class="table table-bordered table-hover">
+          <thead>
+          <tr>
+            <th>CMS</th>
+            <th>创建时间</th>
+            <th>是否作废</th>
+            <th>修改时间</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="list-item">
+        <table class="table table-bordered table-hover">
+          <tbody>
+          <tr *ngFor="let item of cmsList">
+            <td><a [routerLink]="['/product/recipeDetal', item.cmsId]">{{item.title}}</a></td>
+            <td>{{item.author}}</td>
+            <td>{{item.difficultyLevel}}</td>
+            <td>{{item.cookTime}}</td>
+            <td>
+              <a (click)="editRecipe(item)">编辑</a>
+              <a>删除</a>
+              <a>应用</a>
+              <a>作废</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-12 pagination2">
+      <pagination [totalItems]="totalItems" [(ngModel)]="page"
+                  [maxSize]="maxSize" class="pagination3 pagination-sm"
+                  [boundaryLinks]="true"
+                  (pageChanged)="pageChanged($event)"></pagination>
+    </div>
+  </section>
+</div>

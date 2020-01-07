@@ -3,14 +3,16 @@ import { RouterModule,Routes } from '@angular/router';
 
 import {UserListComponent} from "./list/list.component";
 //import {LoginComponent} from "./login/login.component";
+import {MyLoginService} from "../core/my-login.service";
+
 
 
 const userRoutes: Routes = [
     {
-      path: 'userList', component: UserListComponent //,canActivate:[NeedAuthGuard]
+      path: 'userList', component: UserListComponent ,canActivate:[MyLoginService]
     },
     {
-      path: '', component: UserListComponent //,canActivate:[NeedAuthGuard]
+      path: '', component: UserListComponent ,canActivate:[MyLoginService]
     }
 ];
 

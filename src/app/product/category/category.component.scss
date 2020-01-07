@@ -1,0 +1,49 @@
+.category{
+  .category-content{
+    .category-head{
+      border-top: 1px solid #ddd !important;
+    }
+    .category-list{
+      //F3F7FB DFEDFB CBE1F8
+      display: flex;
+      border:1px solid #ddd;
+      align-items: center;
+      border-top:none;
+      .iconfont{
+        font-size: 22px;
+        color: #aaa;
+      }
+      .expend-sub{
+        cursor: pointer;
+        text-align: center;
+        font-size: 18px;
+      }
+      .category-item{
+        padding: 5px;
+
+      }
+      .category-expend{
+        width: 40px;
+        text-align: center;
+      }
+      .category-img{
+        width: 80px;
+        text-align: center;
+        img{
+          width: 50px;
+          height: 50px;
+          border:1px solid #999;
+        }
+      }
+      .category-name{
+        flex: 1;
+      }
+    }
+    .list1{
+      background: #DFEDFB;
+    }
+    .list2{
+      border-bottom:none;
+    }
+  }
+}

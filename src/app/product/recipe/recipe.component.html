@@ -1,0 +1,58 @@
+<section class="recipe-list">
+  <ol class="breadcrumb">
+    <li class="active">菜谱列表</li>
+    <!--<li><a href="#">Library</a></li>-->
+  </ol>
+  <a class="btn btn-primary fr" (click)="createRecipe()">新增菜谱</a>
+
+  <form (ngSubmit)="search()" #searchForm="ngForm" class="form-search cb">
+    <div class="form-group">
+      <label>商品名称</label>
+      <input type="text" class="form-control" name="title" [(ngModel)]="search.title">
+    </div>
+    <div class="form-group">
+      <label>材料名</label>
+      <input type="text" class="form-control" name="productName" [(ngModel)]="search.productName">
+    </div>
+    <button type="submit" [disabled]="!searchForm.form.valid" class="btn btn-success fr">搜索</button>
+  </form>
+  <section>
+    <div class="table-list">
+      <div class="list-title">
+        <table class="table table-bordered table-hover">
+          <thead>
+          <tr>
+            <th>菜谱标题</th>
+            <th>菜谱作者</th>
+            <th>难度等级</th>
+            <th>制作时间</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="list-item">
+        <table class="table table-bordered table-hover">
+          <tbody>
+          <tr *ngFor="let item of recipeList">
+            <td><a [routerLink]="['/product/recipeDetal', item.recipeId]">{{item.title}}</a></td>
+            <td>{{item.author}}</td>
+            <td>{{item.difficultyLevel}}</td>
+            <td>{{item.cookTime}}</td>
+            <td>
+              <a (click)="editRecipe(item)">编辑</a>
+              <a>删除</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-12 pagination2">
+      <pagination [totalItems]="totalItems" [(ngModel)]="page"
+                  [maxSize]="maxSize" class="pagination3 pagination-sm"
+                  [boundaryLinks]="true"
+                  (pageChanged)="recipePageChanged($event)"></pagination>
+    </div>
+  </section>
+</section>

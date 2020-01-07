@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-nav',
   templateUrl: 'nav.component.html',
-  styleUrls: ['nav.component.less']
+  styleUrls: ['nav.component.scss']
 })
 export class NavComponent implements OnInit {
   title = 'menu';
@@ -15,9 +15,14 @@ export class NavComponent implements OnInit {
       icon: 'glyphicon-th',
       subMenu: [
         {
-          id: 11,
+          id: 51,
           title: '首页配置',
           link: '/cms/cmsIndex'
+        },
+        {
+          id: 52,
+          title: 'CMS列表',
+          link: '/cms/cmsList'
         }
       ]
     },
@@ -35,6 +40,16 @@ export class NavComponent implements OnInit {
           id: 12,
           title: '商品列表',
           link: '/product/productList'
+        },
+        {
+          id: 13,
+          title: '商品分类',
+          link: '/product/category'
+        },
+        {
+          id: 14,
+          title: '菜谱列表',
+          link: '/product/recipe'
         }
       ]
     },

@@ -1,0 +1,115 @@
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+  padding: 8px 0;
+  vertical-align: middle;
+}
+.product-list{
+  .nav{
+    margin-bottom: 10px;
+  }
+  .content{
+    margin-top: 10px;
+    border-top: 1px solid #ddd;
+    .table-list{
+      width: calc(100% - 40px);
+      height: calc(100% - 200px);
+      position: absolute;
+      overflow: hidden;
+      .list-title{
+        background: #fff;
+      }
+      .list-item{
+        max-height: calc(100% - 51px);
+        overflow-y: auto;
+        height: auto;
+        position: absolute;
+        width: 100%;
+        background: #fff;
+        border-bottom: 1px solid #ddd;
+      }
+      table{
+        text-align: center;
+        color: #555;
+        margin-bottom: 0;
+        table-layout: fixed;
+        border: none;
+        tr{
+          &:hover{
+            background-color: aliceblue;
+          }
+          &:last-child{
+            td{
+              //border-bottom:none;
+            }
+          }
+          &:first-child{
+            td{
+              border-top:none;
+            }
+          }
+        }
+        th{
+          text-align: center;
+          height: 40px;
+        }
+        .ope{
+          color: #337ab7;
+          cursor: pointer;
+        }
+        .product-detail{
+          text-align: left;
+          border-bottom:1px solid #aaa;
+          padding: 0 10px;
+          img{
+            height: 40px;
+            width: 50px;
+          }
+          p, a{
+            margin-left: 60px;
+            display: block;
+          }
+          .title{
+            color: #666;
+          }
+          .sub-title{
+            font-size: 11px;
+            -webkit-box-orient: vertical;
+            color: #777;
+          }
+        }
+        .product-detail:last-child{
+          border-bottom: none;
+        }
+        .sale-btn{
+          color: #337ab7;
+          cursor: pointer;
+        }
+      }
+    }
+    .pagination2{
+      text-align: center;
+      position: fixed;
+      bottom: 0;
+      width: calc(100% - 220px);
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      margin: 0;
+    }
+  }
+}
+.sale-modal{
+  //height: 300px!important;
+  .modal-body{
+    form{
+      text-align: center;
+    }
+  }
+}
+.pro-category-modal{
+  .modal-body{
+    min-height:300px;
+  }
+}
+/deep/ .show{
+  z-index: 9999;
+}

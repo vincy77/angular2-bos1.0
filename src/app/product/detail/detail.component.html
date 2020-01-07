@@ -1,0 +1,31 @@
+
+<section class="product-detail">
+  <ol class="breadcrumb">
+    <li (click)="goBack()"><a>Library</a></li>
+    <li class="active">商品详情</li>
+  </ol>
+  <ul class="main product-info">
+    <li class="info-item">
+      <label>商品标题：</label>
+      <p>{{productData.title}}</p>
+    </li>
+    <li class="info-item">
+      <label>商品副标题：</label>
+      <p>{{productData.subTitle}}</p>
+    </li>
+    <li class="info-item">
+      <label>商品图片：</label>
+      <div *ngFor="let item of productData.productImg">
+        <img src="{{item}}" style="width: 50px;height: 50px;">
+      </div>
+    </li>
+    <li class="info-item">
+      <label>商品分类：</label>
+      <p>{{productData.categoryName}}</p>
+    </li>
+    <li class="info-item">
+      <label>商品价格：</label>
+      <p>¥{{productData.price}}</p>
+    </li>
+  </ul>
+</section>

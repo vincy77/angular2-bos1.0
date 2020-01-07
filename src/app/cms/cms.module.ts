@@ -9,6 +9,7 @@ import { InMemoryDataService }  from './in-memory-data.service';
 
 import { CMSIndexComponent } from './index/index.component';
 import { CMSRoutingModule } from './cms-routing.module';
+import { CMSListComponent } from './list/list.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { CMSRoutingModule } from './cms-routing.module';
     CMSRoutingModule
   ],
   declarations: [
-    CMSIndexComponent
+    CMSIndexComponent,
+    CMSListComponent
   ]
 })
 export class CMSModule { }

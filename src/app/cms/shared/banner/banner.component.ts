@@ -4,7 +4,7 @@ import { FormControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/f
 @Component({
   selector: 'cms-banner',
   templateUrl: 'banner.component.html',
-  styleUrls: ['banner.component.less'],
+  styleUrls: ['banner.component.scss'],
   // providers: [
   //   {
   //     provide: NG_VALUE_ACCESSOR,

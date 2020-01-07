@@ -3,7 +3,7 @@ import { SharedModule } from '../../shared/shared.module';
 
 import { CMSBannerComponent } from './banner/banner.component';
 
-import { ProductService } from '../shared/product.service';
+import { CMSService } from './cms.service';
 
 @NgModule({
   imports: [
@@ -14,7 +14,7 @@ import { ProductService } from '../shared/product.service';
     SharedModule
   ],
   providers: [
-    ProductService
+    CMSService
   ],
   declarations: [
     CMSBannerComponent
